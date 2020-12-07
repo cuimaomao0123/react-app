@@ -1,25 +1,36 @@
-import React, { memo, useCallback } from 'react';
+import React, { memo, useEffect } from 'react';
 import { Form, Input, Button, } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import { LoginBg, LoginBox } from './style.js'
+
+import Vertify from './vertify';
+import { LoginBg, 
+        LoginBox } from './style.js'
 
 export default memo(function Login() {
+  let username;
+  let password;
+  let authcode;
+
+  useEffect(() => {
+    // const verifyCode = new GVerify("v_container");
+  },[])
   const layout = {
     wrapperCol: { span: 20 }
   };
   const codelayout = {
     wrapperCol: { span: 12 }
   };
-  const tailLayout = {
-    wrapperCol: { offset: 8, span: 12 },
+  const butlayout = {
+    wrapperCol: { offset: 0, span: 20 },
   };
-
-  const onFinish = useCallback(values => {
-      console.log('Success:', values);
-    },[]);
-  const onFinishFailed = useCallback(errorInfo => {
-    console.log('Failed:', errorInfo);
-  },[]);
+  const onFinish = values => {
+    username = values.username;
+    password = values.password;
+    authcode = values.authcode;
+  };
+  const onFinishFailed = errorInfo => {
+    // console.log('Failed:', errorInfo);
+  };
   const handleUserName = (rule, value, callback) => {
     if(value && value.length <8){
       return Promise.reject("请输入有效用户名");
@@ -27,13 +38,26 @@ export default memo(function Login() {
       return Promise.resolve();
     }
   }
+  const handlePassWord = (rule, value, callback) => {
+    if(value && value.length <8){
+      return Promise.reject("请输入有效密码");
+    }else{
+      return Promise.resolve();
+    }
+  }
+  const handleAuthCode = (rule, value, callback) => {
+    if(value && value.length <8){
+      return Promise.reject("请输入正确验证码");
+    }else{
+      return Promise.resolve();
+    }
+  }
   const rules = {
     username: [{ required: true, message: '请输入用户名' },{validator: (rule, value, callback) => handleUserName(rule, value, callback)}],
-    password: [],
-    authcode: []
+    password: [{ required: true, message: '请输入密码' },{validator: (rule, value, callback) => handlePassWord(rule, value, callback)}],
+    authcode: [{ required: true, message: '请输入验证码' },{validator: (rule, value, callback) => handleAuthCode(rule, value, callback)}]
   }
 
-  // const [form] = Form.useForm();
   return (
   <LoginBg>
     <LoginBox>
@@ -41,6 +65,7 @@ export default memo(function Login() {
       <Form
       {...layout}
       name="basic"
+      validateTrigger="onSubmit"
       initialValues={{ remember: true }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
@@ -53,23 +78,33 @@ export default memo(function Login() {
       </Form.Item>
       <Form.Item
         name="password"
-        rules={[{ required: true, message: '请输入密码' }]}
+        rules={rules.password}
       >
          <Input.Password prefix={<LockOutlined className="site-form-item-icon" />} type="password" placeholder="请输入密码..." />
       </Form.Item>
       <Form.Item
         {...codelayout}
         name="authcode"
-        rules={[{ required: true, message: '请输入验证码' }]}
+        rules={rules.authcode}
       >
         <Input prefix={<LockOutlined className="site-form-item-icon" />} type="password" placeholder="请输入验证码..." />
       </Form.Item>
-      <Form.Item {...tailLayout}>
-        <Button type="primary" htmlType="submit">
-          Submit
+      <Form.Item {...butlayout}>
+        <Button type="primary" htmlType="submit" block>
+          登录
         </Button>
       </Form.Item>
     </Form>
+    <div id="login_vertify">
+      <Vertify
+        width={90}
+        height={30}
+        count={4}
+        lineCount={10}
+        pointCount={5}
+        fontSize={25}
+        />
+    </div>
     </LoginBox>
   </LoginBg>
   )

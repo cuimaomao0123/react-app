@@ -12,10 +12,10 @@ export const LoginBg = styled.div`
 export const LoginBox = styled.div`
   padding-top: 20px;
   height: 300px;
-  position: absolute;
-  right: 180px;
-  top: 50%;
-  transform: translateY(-50%);
+  position: relative;
+  top: 45%;
+  left: 80%;
+  transform: translateY(-50%) translateX(-50%);
   width: 300px;
   background-color: rgb(239, 242, 244);
   border-radius: 4px;
@@ -30,5 +30,12 @@ export const LoginBox = styled.div`
   }
   .ant-form-item-control{
     margin: 0 0 0 25px;
+  }
+  #login_vertify{
+    position: absolute;
+    right: 23px;
+    bottom: 73px;
+    height: 32px;
+    width: 95px;
   }
 `
