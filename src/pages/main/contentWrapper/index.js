@@ -3,7 +3,7 @@ import { Button } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
 
 import { renderRoutes } from 'react-router-config';
-import routes from '@/router';
+import { routes}  from '@/router';
 
 import { useDispatch } from 'react-redux';
 import { changeMenuWidth, changeCollaspe } from '../store/actionCreators'
