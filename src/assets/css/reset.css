@@ -12,6 +12,9 @@ ul, ol, li {
 }
 
 /* 全局样式 */
+#root, #app{
+  height: 100%;
+}
 body, textarea, select, input, button {
   font-size: 12px;
   color: #333;
