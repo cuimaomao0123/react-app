@@ -1,15 +1,19 @@
 import React, { memo } from 'react'
 
 import LeftMenu from './menuWrapper';
-import RightContent from './contentWrapper'
-import { MainWrapper } from './style.js'
+import ContentTop from './contentTop'
+import { MainWrapper, 
+        TopWrapper } from './style.js'
 
-export default memo(function Main() {
- 
+
+export default memo(function Main(props) {
   return (
     <MainWrapper>
       <LeftMenu></LeftMenu>
-      <RightContent></RightContent>
+      <TopWrapper>
+        <ContentTop></ContentTop>
+        {props.children}
+      </TopWrapper>
     </MainWrapper>
   )
 })

@@ -2,7 +2,7 @@ import React, { memo, useState, useCallback } from 'react'
 import { useSelector, shallowEqual } from 'react-redux';
 import { Menu } from 'antd';
 import { MenuWrap } from './style.js'
-import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
+import { MailOutlined, SettingOutlined } from '@ant-design/icons';
 
 const { SubMenu } = Menu;
 export default memo(function MenuComp() {

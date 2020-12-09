@@ -1,12 +1,14 @@
 import React, { memo, useCallback, useState } from 'react';
-import { Form, Input, Button, } from 'antd';
+import { Form, Input, Button, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
-import Vertify from './vertify';
+import Vertify from '@/components/vertify';
 import { LoginBg, 
         LoginBox } from './style.js'
+import { setToken } from '@/utils'
 
-export default memo(function Login() {                //eslint-disable-next-line
+
+export default memo(function Login(props) {                //eslint-disable-next-line
   const [username, setusername] = useState("");       //eslint-disable-next-line
   const [password, setpassword] = useState("");       //eslint-disable-next-line
   const [authcode, setauthcode] = useState("");       
@@ -24,25 +26,29 @@ export default memo(function Login() {                //eslint-disable-next-line
     wrapperCol: { offset: 0, span: 20 },
   };
   const onFinish = values => {
-    setusername(values.username)
-    setpassword(values.password)
-    setauthcode(values.authcode)
     //发送请求
+    if(username === 'system' && password === '123456' && authcode){
+      message.success('登录成功')
+      setToken('mytokenis123456');
+      props.history.push("/info01");
+    }
   };
   const onFinishFailed = errorInfo => {
     // console.log('Failed:', errorInfo);
   };
   const handleUserName = (rule, value, callback) => {
-    if(value && value.length <8){
+    if(value && value.length <5){
       return Promise.reject("请输入有效用户名");
     }else{
+      setusername(value)
       return Promise.resolve();
     }
   }
   const handlePassWord = (rule, value, callback) => {
-    if(value && value.length <8){
-      return Promise.reject("密码长度应大于等于8位");
+    if(value && value.length <6){
+      return Promise.reject("密码长度应大于等于6位");
     }else{
+      setpassword(value)
       return Promise.resolve();
     }
   }
@@ -50,6 +56,7 @@ export default memo(function Login() {                //eslint-disable-next-line
     if((value && value.toUpperCase() !== code)){
       return Promise.reject("请输入正确验证码");
     }else{
+      setauthcode(value)
       return Promise.resolve();
     }
   }

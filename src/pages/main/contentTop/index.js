@@ -1,17 +1,17 @@
 import React, { memo } from 'react'
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { Button } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
 
-import { renderRoutes } from 'react-router-config';
-import { routes}  from '@/router';
-
-import { useDispatch } from 'react-redux';
+import { ContentTop } from './style.js'
 import { changeMenuWidth, changeCollaspe } from '../store/actionCreators'
-import {  ContentWrapper,
-          ContentTop } from './style.js'
+import { setToken } from '@/utils'
 
-export default memo(function RightContent(props) {
+export default memo(function Index() {
+
   const dispatch = useDispatch();
+  const history = useHistory()
   let isCollapes;
   const collapseClick = () => {
     if(isCollapes){
@@ -23,12 +23,14 @@ export default memo(function RightContent(props) {
     }
     isCollapes = !isCollapes;
   };
+  const logOut = () => {
+    setToken("");
+    history.push("/login");
+  }
   return (
-    <ContentWrapper>
-      <ContentTop>
-        <Button type="defalut" icon={<MenuOutlined />} onClick={collapseClick} />
-      </ContentTop>
-      {renderRoutes(routes)}
-    </ContentWrapper>
+    <ContentTop>
+      <Button type="defalut" icon={<MenuOutlined />} onClick={collapseClick} />
+      <Button type="defalut" onClick={logOut}>退出登录</Button>
+    </ContentTop>
   )
 })

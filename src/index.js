@@ -1,10 +1,32 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
+import { HashRouter, Route, Redirect, Switch } from 'react-router-dom';
+import { loginRoutes } from '@/router'
+
+import store from './store';
+import { Provider } from 'react-redux';
+
 import App from './App';
+import PageNotFound from '@/pages/notFound'
 import "@/assets/css/reset.css";
 
 ReactDOM.render(
-  <App />,
+  <HashRouter>
+    <Switch>
+      <Suspense fallback={<div>page loading</div>}>
+        <Provider store={store}>
+          {
+            loginRoutes.map(item => {
+              return <Route key={item.path} {...item}/>
+            })
+          }
+          <Route path="/info01" render={routeProps => <App {...routeProps}/>} />
+          <Route component={PageNotFound}/>
+          <Redirect to="/info01" from="/" />
+        </Provider>
+      </Suspense>
+    </Switch>
+  </HashRouter>,
   document.getElementById('root')
 );
 

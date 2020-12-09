@@ -1,24 +1,28 @@
-import React, { memo, Suspense } from 'react'
-import { Provider } from 'react-redux';
-import { HashRouter, Route, Redirect} from 'react-router-dom';
-import { loginRoutes } from '@/router'
-import { renderRoutes } from 'react-router-config';
+import React, { memo } from 'react'
+import { withRouter, HashRouter, Redirect, Route } from 'react-router-dom';
+import { routes }  from '@/router';
 
-import Main from "@/pages/main"
-import store from './store';
+import PageNotFound from '@/pages/notFound'
+import Main from '@/pages/main'
+import { isToken } from '@/utils'
 
-export default memo(function App() {
+
+export default withRouter(memo(function App() {
   return (
-    <HashRouter>
-      <Suspense fallback={<div>page loading</div>}>
+    isToken() ? (
+      <HashRouter>
         <div id="app">
-          <Provider store={store}>
-            <Route path="/info1" render={ routeProps => <Main {...routeProps}/> }/>
-            {renderRoutes(loginRoutes)}
-            <Redirect to="/info1" from="/" />
-          </Provider>
+          <Main>
+            {
+              routes.map(item => {
+                return <Route key={item.path} {...item} />;
+              })
+            }
+          </Main>
         </div>
-      </Suspense>
-    </HashRouter>
+      </HashRouter>
+      ) 
+    : 
+    <Redirect to="/login"/>
   )
-})
+}))

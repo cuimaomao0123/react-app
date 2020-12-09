@@ -1,4 +1,6 @@
+
 /* eslint-disable no-param-reassign */
+/*图形验证码组件 */
 import React, { useRef, useEffect, useState } from 'react';
 
 // 默认的颜色
