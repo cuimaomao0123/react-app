@@ -8,10 +8,10 @@ import { LoginBg,
 import { setToken } from '@/utils'
 
 
-export default memo(function Login(props) {                //eslint-disable-next-line
-  const [username, setusername] = useState("");       //eslint-disable-next-line
-  const [password, setpassword] = useState("");       //eslint-disable-next-line
-  const [authcode, setauthcode] = useState("");       
+export default memo(function Login(props) {
+  const [username, setusername] = useState("");
+  const [password, setpassword] = useState("");
+  const [authcode, setauthcode] = useState("");
   const [code, setcode] = useState("");
   const getAuthCode = useCallback((code) => {
     setcode(code);

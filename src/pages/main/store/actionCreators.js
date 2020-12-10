@@ -1,4 +1,5 @@
 import { dealMenuList } from '@/utils'
+import { routes } from "@/router"
 
 export const changeMenuWidth = (width) => ({
   type: 'change_menu_width',
@@ -16,8 +17,9 @@ const addMenuList = (menuList) => ({
 });
 
 export const getMenuList = () => {
-  return dispatch => {
-    dealMenuList()
-    // dispatch(changeHotRecommendAction(res));
+  return dispatch => {                        //发送请求，获取菜单栏数据
+    let menuList = dealMenuList(routes);      //获取到数据后处理菜单栏数据
+    dispatch(addMenuList(menuList));
   }
 }
+

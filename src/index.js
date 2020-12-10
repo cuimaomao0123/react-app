@@ -11,10 +11,10 @@ import PageNotFound from '@/pages/notFound'
 import "@/assets/css/reset.css";
 
 ReactDOM.render(
-  <HashRouter>
-    <Switch>
+  <Provider store={store}>
+    <HashRouter>
       <Suspense fallback={<div>page loading</div>}>
-        <Provider store={store}>
+        <Switch>                                      {/*Switch层级放错，不起效果，要尽量保证最内层，才会只匹配一个路由！！！ */}
           {
             loginRoutes.map(item => {
               return <Route key={item.path} {...item}/>
@@ -22,15 +22,15 @@ ReactDOM.render(
           }
           {
             routes.map(item => {
-              return <Route key={item.path} path={item.path} render={routeProps => <App {...routeProps}/>} />;
+              return <Route key={item.path} path={item.path} render={routeProps => <App {...routeProps}/>} />
             })
           }
+          <Redirect to="/home" from="/" />
           <Route component={PageNotFound}/>
-          <Redirect to="/info01" from="/" />
-        </Provider>
+        </Switch>
       </Suspense>
-    </Switch>
-  </HashRouter>,
+    </HashRouter>
+  </Provider>,
   document.getElementById('root')
 );
 

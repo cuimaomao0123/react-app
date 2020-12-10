@@ -1,9 +1,9 @@
 import React, { memo } from 'react'
 
-export default memo(function () {
+export default memo(function PersonalInfo() {
   return (
     <div>
-      test02
+      PersonalInfo
     </div>
   )
 })

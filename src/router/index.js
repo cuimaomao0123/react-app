@@ -4,10 +4,11 @@ import { Redirect } from 'react-router-dom';
 const Main = React.lazy(() => import("@/pages/main"));
 const Login = React.lazy(() => import("@/pages/login"));
 const PageNotFound = React.lazy(() => import("@/pages/notFound"));
-const Test01 = React.lazy(() => import("@/pages/test01"));
-const Test02 = React.lazy(() => import("@/pages/test02"));
-const Test03 = React.lazy(() => import("@/pages/test03"));
-const Test04 = React.lazy(() => import("@/pages/test04"));
+const View = React.lazy(() => import("@/pages/view"));
+const AbnormalImage = React.lazy(() => import("@/pages/abnormalImage"));
+const PersonalInfo = React.lazy(() => import("@/pages/personalInfo"));
+const AbnormalTracking = React.lazy(() => import("@/pages/abnormalTracking"));
+const DeviceDetail = React.lazy(() => import("@/pages/deviceDetail"));
 
 export const loginRoutes = [        //不需要权限的路由
   {
@@ -22,44 +23,79 @@ export const loginRoutes = [        //不需要权限的路由
 
 export const routes = [           //需要权限的路由(登录进入主页面之后的路由)
   {
-    path: "/info01",
+    path: "/home",
+    title: '首页管理',
     component: Main,
     routes: [
       {
-        path: "/info01",
+        path: "/home",
         exact: true,
         render: () => (
-          <Redirect to="/info01/test01"/>
+          <Redirect to="/home/view"/>
         )
       },
       {
-        path: "/info01/test01",
-        component: Test01
+        path: "/home/view",
+        title: '可视化管理',
+        component: View
       },
       {
-        path: "/info01/test02",
-        component: Test02
+        path: "/home/abnormalImage",
+        title: '异常图像',
+        component: AbnormalImage
+      },
+      {
+        render: () => (
+          <Redirect to="/404" from="*"/>
+        )
       }
     ]
   },
   {
-    path: "/info02",
+    path: "/infoCollect",
+    title: '信息汇总',
     component: Main,
     routes: [
       {
-        path: "/info02",
+        path: "/infoCollect",
         exact: true,
         render: () => (
-          <Redirect to="/info02/test01"/>
+          <Redirect to="/infoCollect/personalInfo"/>
         )
       },
       {
-        path: "/info02/test01",
-        component: Test03
+        path: "/infoCollect/personalInfo",
+        title: "人员信息",
+        component: PersonalInfo
       },
       {
-        path: "/info02/test02",
-        component: Test04
+        path: "/infoCollect/abnormalTracking",
+        title: "异常追踪",
+        component: AbnormalTracking
+      },
+      {
+        render: () => (
+          <Redirect to="/404" from="*"/>
+        )
+      }
+    ]
+  },
+  {
+    path: "/device",
+    title: '设备管理',
+    component: Main,
+    routes: [
+      {
+        path: "/device",
+        exact: true,
+        render: () => (
+          <Redirect to="/device/deviceDetail"/>
+        )
+      },
+      {
+        path: "/device/deviceDetail",
+        title: "设备查询",
+        component: DeviceDetail
       }
     ]
   }
