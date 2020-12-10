@@ -2,23 +2,15 @@ import React, { memo } from 'react'
 import { withRouter, HashRouter, Redirect, Route } from 'react-router-dom';
 import { routes }  from '@/router';
 
-import PageNotFound from '@/pages/notFound'
-import Main from '@/pages/main'
 import { isToken } from '@/utils'
+import { renderRoutes } from 'react-router-config';
 
-
-export default withRouter(memo(function App() {
+export default withRouter(memo(function App(props) {
   return (
     isToken() ? (
       <HashRouter>
         <div id="app">
-          <Main>
-            {
-              routes.map(item => {
-                return <Route key={item.path} {...item} />;
-              })
-            }
-          </Main>
+          { renderRoutes(routes) }
         </div>
       </HashRouter>
       ) 

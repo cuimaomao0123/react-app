@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { HashRouter, Route, Redirect, Switch } from 'react-router-dom';
-import { loginRoutes } from '@/router'
+import { loginRoutes, routes } from '@/router'
 
 import store from './store';
 import { Provider } from 'react-redux';
@@ -20,7 +20,11 @@ ReactDOM.render(
               return <Route key={item.path} {...item}/>
             })
           }
-          <Route path="/info01" render={routeProps => <App {...routeProps}/>} />
+          {
+            routes.map(item => {
+              return <Route key={item.path} path={item.path} render={routeProps => <App {...routeProps}/>} />;
+            })
+          }
           <Route component={PageNotFound}/>
           <Redirect to="/info01" from="/" />
         </Provider>

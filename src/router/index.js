@@ -9,7 +9,7 @@ const Test02 = React.lazy(() => import("@/pages/test02"));
 const Test03 = React.lazy(() => import("@/pages/test03"));
 const Test04 = React.lazy(() => import("@/pages/test04"));
 
-export const loginRoutes = [
+export const loginRoutes = [        //不需要权限的路由
   {
     path: '/login',
     component: Login
@@ -20,53 +20,35 @@ export const loginRoutes = [
   }
 ]
 
-export const routes = [
+export const routes = [           //需要权限的路由(登录进入主页面之后的路由)
   {
     path: "/info01",
-    exact: true,
-    render: () => (
-      <Redirect to="/info01/test01"/>
-    )
-  },
-  {
-    path: "/info01/test01",
-    component: Test01
-  },
-  {
-    path: "/info01/test02",
-    component: Test02
-  }
-]
-
-export const routess = [
-  {
-    path: "/info01",
-    exact: true,
     component: Main,
     routes: [
       {
         path: "/info01",
+        exact: true,
         render: () => (
           <Redirect to="/info01/test01"/>
         )
       },
       {
         path: "/info01/test01",
-        component: Test03
+        component: Test01
       },
       {
         path: "/info01/test02",
-        component: Test04
+        component: Test02
       }
     ]
   },
   {
     path: "/info02",
-    exact: true,
     component: Main,
     routes: [
       {
         path: "/info02",
+        exact: true,
         render: () => (
           <Redirect to="/info02/test01"/>
         )
