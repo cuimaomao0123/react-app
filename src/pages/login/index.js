@@ -7,7 +7,6 @@ import { LoginBg,
         LoginBox } from './style.js'
 import { setToken } from '@/utils'
 
-
 export default memo(function Login(props) {
   const [username, setusername] = useState("");
   const [password, setpassword] = useState("");
@@ -29,8 +28,8 @@ export default memo(function Login(props) {
     //发送请求
     if(username === 'system' && password === '123456' && authcode){
       message.success('登录成功')
-      setToken('mytokenis123456');
-      props.history.push("/info01");
+      setToken('react_token_is_123456');
+      props.history.push("/home");
     }
   };
   const onFinishFailed = errorInfo => {

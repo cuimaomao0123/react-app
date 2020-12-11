@@ -40,6 +40,10 @@ export const setToken = (token) => {
   localStorage.setItem('react_token',token);
 }
 
+export const removeToken = () => {
+  localStorage.removeItem('react_token')
+}
+
 export const isToken = () => {
   return getToken() ? true : false;
 }

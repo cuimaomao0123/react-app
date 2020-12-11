@@ -6,10 +6,9 @@ import { MenuOutlined } from '@ant-design/icons';
 
 import { ContentTop } from './style.js'
 import { changeMenuWidth, changeCollaspe } from '../store/actionCreators'
-import { setToken } from '@/utils'
+import { removeToken } from '@/utils'
 
 export default memo(function Index() {
-
   const dispatch = useDispatch();
   const history = useHistory()
   let isCollapes;
@@ -24,7 +23,7 @@ export default memo(function Index() {
     isCollapes = !isCollapes;
   };
   const logOut = () => {
-    setToken("");
+    removeToken();
     history.push("/login");
   }
   return (

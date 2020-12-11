@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 
-const Main = React.lazy(() => import("@/pages/main"));
+const Main = React.lazy(() => import("@/pages/main"));          //路由懒加载
 const Login = React.lazy(() => import("@/pages/login"));
 const PageNotFound = React.lazy(() => import("@/pages/notFound"));
 const View = React.lazy(() => import("@/pages/view"));
@@ -26,6 +26,7 @@ export const routes = [           //需要权限的路由(登录进入主页面�
     path: "/home",
     title: '首页管理',
     component: Main,
+    icon: "HomeOutlined",
     routes: [
       {
         path: "/home",
@@ -55,6 +56,7 @@ export const routes = [           //需要权限的路由(登录进入主页面�
     path: "/infoCollect",
     title: '信息汇总',
     component: Main,
+    icon: "UsergroupAddOutlined",
     routes: [
       {
         path: "/infoCollect",
@@ -84,6 +86,7 @@ export const routes = [           //需要权限的路由(登录进入主页面�
     path: "/device",
     title: '设备管理',
     component: Main,
+    icon: "SettingOutlined",
     routes: [
       {
         path: "/device",

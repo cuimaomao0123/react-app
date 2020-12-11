@@ -1,15 +1,13 @@
-import React, { memo, useState, useCallback } from 'react'
+import React, { memo, useState, useCallback, useEffect } from 'react'
 import { useSelector, shallowEqual } from 'react-redux';
 import { Menu } from 'antd';
+import  * as Icon from '@ant-design/icons';
 import { MenuWrap } from './style.js'
-import { MailOutlined, SettingOutlined } from '@ant-design/icons';
 
 const { SubMenu } = Menu;
-export default memo(function MenuComp() {
-  const [submenu, setsubmenu] = useState([''])
-  const [selectKeys, setselectKeys] = useState([''])
-  // const [submenu, setsubmenu] = useState(['/home'])
-  // const [selectKeys, setselectKeys] = useState(['/home/view'])
+export default memo(function MenuComp(props) {
+  const [submenu, setsubmenu] = useState([props.route.path])
+  const [selectKeys, setselectKeys] = useState([props.location.pathname])
 
   const changeMenu = useCallback((openKeys) => {
     setsubmenu([openKeys[openKeys.length - 1]]);
@@ -22,9 +20,15 @@ export default memo(function MenuComp() {
   const { menuList } = useSelector(state =>({
     menuList: state.getIn(["menuData", "menuList"])
   }),shallowEqual);
+  
+  useEffect(() => {
+    setsubmenu([props.route.path])
+    setselectKeys([props.location.pathname])
+  },[props.route.path, props.location.pathname])
 
   const handleClick = e => {
-    setselectKeys([e.key]);
+    setselectKeys([e.key])
+    props.history.push(e.key)
   };
   return (
     <MenuWrap>
@@ -32,8 +36,8 @@ export default memo(function MenuComp() {
         theme={'dark'}
         style={{ width: width }}
         inlineCollapsed={isCollapse}
-        defaultOpenKeys={[menuList[0] && menuList[0].path]}
-        defaultSelectedKeys={[menuList[0] && menuList[0].routes.path]}
+        defaultOpenKeys={submenu}
+        defaultSelectedKeys={selectKeys}
         openKeys={submenu}
         selectedKeys={selectKeys}
         onOpenChange={changeMenu}
@@ -43,7 +47,11 @@ export default memo(function MenuComp() {
         {
           menuList.map(item => {
             return (
-              <SubMenu key={item.path} icon={<SettingOutlined />} title={item.title}>
+              <SubMenu key={item.path} icon={
+                React.createElement(
+                  Icon[item.icon]
+                )
+              } title={item.title}>
                 {
                   item.routes.map(it => {
                   return <Menu.Item key={it.path}>{it.title}</Menu.Item>;
