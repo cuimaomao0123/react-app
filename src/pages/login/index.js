@@ -7,11 +7,10 @@ import { LoginBg,
         LoginBox } from './style.js'
 import { setToken } from '@/utils'
 
-
-export default memo(function Login(props) {                //eslint-disable-next-line
-  const [username, setusername] = useState("");       //eslint-disable-next-line
-  const [password, setpassword] = useState("");       //eslint-disable-next-line
-  const [authcode, setauthcode] = useState("");       
+export default memo(function Login(props) {
+  const [username, setusername] = useState("");
+  const [password, setpassword] = useState("");
+  const [authcode, setauthcode] = useState("");
   const [code, setcode] = useState("");
   const getAuthCode = useCallback((code) => {
     setcode(code);
@@ -29,8 +28,8 @@ export default memo(function Login(props) {                //eslint-disable-next
     //发送请求
     if(username === 'system' && password === '123456' && authcode){
       message.success('登录成功')
-      setToken('mytokenis123456');
-      props.history.push("/info01");
+      setToken('react_token_is_123456');
+      props.history.push("/home");
     }
   };
   const onFinishFailed = errorInfo => {

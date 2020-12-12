@@ -1,19 +1,23 @@
 import React, { memo } from 'react'
+import { renderRoutes } from 'react-router-config';
 
 import LeftMenu from './menuWrapper';
-import ContentTop from './contentTop'
+import TopRouterList from './topRouterList';
+import TopCommon from './topCommon'
 import { MainWrapper, 
         TopWrapper } from './style.js'
 
-
 export default memo(function Main(props) {
+  const { route } = props;
   return (
     <MainWrapper>
-      <LeftMenu></LeftMenu>
+      <LeftMenu {...props}></LeftMenu>
       <TopWrapper>
-        <ContentTop></ContentTop>
-        {props.children}
+        <TopCommon></TopCommon>
+        <TopRouterList></TopRouterList>
+        { renderRoutes(route.routes) }
       </TopWrapper>
     </MainWrapper>
   )
 })
+

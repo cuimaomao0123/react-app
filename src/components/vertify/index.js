@@ -103,16 +103,15 @@ function Captha({
   const canvas = useRef(null);
   const context = useRef(null);
 
-  useEffect(() => {
-    context.current = canvas.current.getContext('2d');
+  useEffect(() => {                                         
+    context.current = canvas.current.getContext('2d');      
   }, []);
 
-  useEffect(() => {
+  useEffect(() => {                                         
     toDraw();
-
     if (onChange instanceof Function) {
       onChange(captha.join(''));
-    }
+    }                                                       //eslint-disable-next-line
   }, [captha]);
 
   const toDraw = () =>

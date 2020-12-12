@@ -1,10 +1,9 @@
 import React, { memo } from 'react'
 
-export default memo(function index() {
+export default memo(function AbnormalImage() {
   return (
     <div>
-      dest10
-
+      AbnormalImage
     </div>
   )
 })

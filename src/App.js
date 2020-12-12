@@ -1,26 +1,16 @@
-import React, { memo } from 'react'
-import { withRouter, HashRouter, Redirect, Route } from 'react-router-dom';
+import React, { memo, useEffect } from 'react'
+import { withRouter, Redirect } from 'react-router-dom';
 import { routes }  from '@/router';
 
-import PageNotFound from '@/pages/notFound'
-import Main from '@/pages/main'
 import { isToken } from '@/utils'
+import { renderRoutes } from 'react-router-config';
 
-
-export default withRouter(memo(function App() {
+export default withRouter(memo(function App(props) {      //判断有无登录，没登录跳回登录页
   return (
     isToken() ? (
-      <HashRouter>
-        <div id="app">
-          <Main>
-            {
-              routes.map(item => {
-                return <Route key={item.path} {...item} />;
-              })
-            }
-          </Main>
-        </div>
-      </HashRouter>
+      <div id="app">
+        { renderRoutes(routes) }
+      </div>
       ) 
     : 
     <Redirect to="/login"/>

@@ -30,6 +30,10 @@ export const MenuWrap = styled.div`
         background-color: #363e4f;
         color: #C0C0C0;
       }
+      li{
+          height: 45px;
+          line-height: 45px;
+        }
     }
     .ant-menu-inline{
       .ant-menu-item, .ant-menu-submenu-title{
