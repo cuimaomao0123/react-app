@@ -9,7 +9,7 @@ export const MenuWrapper = styled.div`
     height: 60px;
     width: 60px;
     position: absolute;
-    left: 40%;
+    left: 45%;
     transform: translateX(-50%);
     margin-top: 15px;
   }

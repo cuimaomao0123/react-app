@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react'
+import React, { memo } from 'react'
 import { withRouter, Redirect } from 'react-router-dom';
 import { routes }  from '@/router';
 

@@ -1,6 +1,8 @@
 import React, { memo, useCallback, useState } from 'react';
 import { Form, Input, Button, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import md5 from 'js-md5';
+import request from '@/network/request';
 
 import Vertify from '@/components/vertify';
 import { LoginBg, 
@@ -26,10 +28,19 @@ export default memo(function Login(props) {
   };
   const onFinish = values => {
     //发送请求
-    if(username === 'system' && password === '123456' && authcode){
-      message.success('登录成功')
-      setToken('react_token_is_123456');
-      props.history.push("/home");
+    if(authcode){
+      request({url: "/admin/login", data: {
+          username: username,
+          password: md5(password)
+        }, method: "post" }).then(res => {
+        if(res.code ===200) {
+          setToken(res.data.token)
+          message.success(res.msg)
+          props.history.push("/home")
+        }else {
+          message.error(res.msg)
+        }
+      })
     }
   };
   const onFinishFailed = errorInfo => {

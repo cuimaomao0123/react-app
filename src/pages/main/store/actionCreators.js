@@ -20,7 +20,7 @@ const changeTopRouterList = (topRouterList) => ({
   type: 'change_top_router_list',
   topRouterList
 })
-export const changeTopRouter = (router) => {
+export const changeTopRouter = (router) => {            //点击侧边菜单操作逻辑
   return (dispatch, getState) => {
     const routerList = [...getState().get("menuData").get('topRouterList')];
     if(!routerList.find(item => item.title === router.title)){          //新增时，添加元素，并且修改active
@@ -46,11 +46,18 @@ export const changeTopRouter = (router) => {
   }
 }
 
-export const changeTopRouterVisible = (title) => {
+export const changeTopRouterVisible = (title) => {                  //点击TopListRouter跳转操作逻辑
   return (dispatch, getState) => {
     const routerList = [...getState().get("menuData").get('topRouterList')];
-    if(routerList.length >1){
-      const index = routerList.findIndex(item => item.title === title);
+    const index = routerList.findIndex(item => item.title === title);
+    if(routerList.length >1){                                       //判断剩余长度，只剩下一个不可以删除
+      if(routerList.find(item => item.title === title).active){     //正在删除当前活跃的路由
+        if(index === 0){                                            //删除第一个,，把活跃路由赋值后面一个
+          routerList[index +1].active = true;
+        }else{
+          routerList[index -1].active = true;
+        }
+      }
       routerList.splice(index,1);
       dispatch(changeTopRouterList(routerList));
     }

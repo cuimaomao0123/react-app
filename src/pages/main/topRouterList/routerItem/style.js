@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 
 export const RouterItemWWrapper = styled.div`
+  &:hover{
+    cursor: pointer;
+  }
   .ant-tag{
     display: flex;
     align-items: center;
