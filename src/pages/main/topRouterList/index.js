@@ -42,7 +42,7 @@ useEffect(() => {
     off(tip, 'mouseleave', selecthidden)
     off(center, 'mousewheel', scroll)
   }
-},[selectShow])
+},[])
 const closeTopRouterList = useCallback((type) => {
   type === 'all' && history.push(menuList[0].path)      //路由跳转到首项
   dispatch(tipCloseChangeTopRouterList(type));          //清除TopRouterList，并且清除cookie
@@ -55,7 +55,7 @@ const selecthidden = () => {
 } 
 const scroll = (e) => {
   console.log(e)
-  setposition(position + e.deLtaY);
+  setposition(position + 100);
 }
   return (
     <TopRouterListWrapper position={position} selectshow={selectShow}>
