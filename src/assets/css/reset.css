@@ -6,6 +6,9 @@ body, html, h1, h2, h3, h4, h5, h6, ul, ol, li, dl, dt, dd, header, menu, sectio
   padding: 0;
   margin: 0;
 }
+body,html {
+  overflow: hidden;
+}
 
 ul, ol, li {
   list-style: none;

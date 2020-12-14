@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const MenuWrapper = styled.div`
+  z-index: 10;
   position: relative;
   width: ${props => props.width} + 'px';
   height: 100%;

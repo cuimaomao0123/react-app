@@ -1,6 +1,6 @@
-import { dealMenuList } from '@/utils'
-import { routes } from "@/router"
-
+import { routes } from "@/router";
+import { dealMenuList } from '@/utils';
+import { cookieSetTopRouterList, cookieDeleteTopRouterList } from '@/utils/cookie.js'
 export const changeMenuWidth = (width) => ({
   type: 'change_menu_width',
   width
@@ -16,11 +16,12 @@ export const addBreadcrumb = (breadcrumb) => ({
   breadcrumb
 })
 
-const changeTopRouterList = (topRouterList) => ({
+export const changeTopRouterList = (topRouterList) => ({
   type: 'change_top_router_list',
   topRouterList
 })
-export const changeTopRouter = (router) => {            //点击侧边菜单操作逻辑
+
+export const changeTopRouter = (router) => {                      //点击左侧边菜单操作逻辑
   return (dispatch, getState) => {
     const routerList = [...getState().get("menuData").get('topRouterList')];
     if(!routerList.find(item => item.title === router.title)){          //新增时，添加元素，并且修改active
@@ -32,6 +33,7 @@ export const changeTopRouter = (router) => {            //点击侧边菜单操�
           item.active = false;
         }
       })
+      cookieSetTopRouterList('add', router);
       dispatch(changeTopRouterList(topRouterList));
     }else{                                                            //无新增时只修改active
       routerList.forEach(item => {
@@ -58,10 +60,27 @@ export const changeTopRouterVisible = (title) => {                  //点击TopL
           routerList[index -1].active = true;
         }
       }
-      routerList.splice(index,1);
+      routerList.splice(index, 1);
+      cookieSetTopRouterList('delete', title); 
       dispatch(changeTopRouterList(routerList));
     }
   };
+}
+
+export const tipCloseChangeTopRouterList = (type) => {
+  return (dispatch, getState) => {
+    if(type === 'all'){
+      const menuList = [...getState().get("menuData").get('menuList')];
+      const oneItem = {path: menuList[0].routes[0].path, title: menuList[0].routes[0].title, key: menuList[0].routes[0].path, active: true}
+      cookieDeleteTopRouterList(oneItem.title);
+      dispatch(changeTopRouterList([oneItem]));
+    }else{
+      const routerList = [...getState().get("menuData").get('topRouterList')];
+      const list = routerList.filter(item => item.active);
+      cookieDeleteTopRouterList('delete', list[0].title); 
+      dispatch(changeTopRouterList(list))
+    }
+  }
 }
 
 const addMenuList = (menuList) => ({

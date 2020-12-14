@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const ContentTop = styled.div`
   display: flex;
   align-items: center;
+  z-index: 20;
   position: relative;
   height: 60px;
   width: 100%;
