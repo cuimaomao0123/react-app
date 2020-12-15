@@ -6,7 +6,6 @@ export const ViewTopWrapper = styled.div`
   height: 70px;
   border: 1px solid #ebeef5;
   box-shadow: 0px 2px 10px rgba(0,0,0,.1);
-  /* min-width: 160px; */
 }
 .day{
   display: flex;
@@ -83,7 +82,7 @@ export const ViewTopWrapper = styled.div`
   .time_total_item3{
     position: absolute;
     top: 15px;
-    left: 2rem;
+    left: 160px;
     min-width: 70px;
     max-width: 110px;
     span{
@@ -118,7 +117,7 @@ export const ViewTopWrapper = styled.div`
   .abnormal_total_item3{
     position: absolute;
     top: 15px;
-    left: 2rem;
+    left: 160px;
     min-width: 70px;
     max-width: 110px;
     span{
@@ -153,7 +152,7 @@ export const ViewTopWrapper = styled.div`
   .rate_item3{
     position: absolute;
     top: 15px;
-    left: 2rem;
+    left: 140px;
     min-width: 70px;
     max-width: 110px;
     span{

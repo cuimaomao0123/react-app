@@ -5,18 +5,18 @@ import LeftMenu from './menuWrapper';
 import TopRouterList from './topRouterList';
 import TopCommon from './topCommon'
 import { MainWrapper, 
-        TopWrapper } from './style.js'
+        RightWrapper } from './style.js'
 
 export default memo(function Main(props) {
   const { route } = props;
   return (
     <MainWrapper>
       <LeftMenu {...props}></LeftMenu>
-      <TopWrapper>
+      <RightWrapper>
         <TopCommon></TopCommon>
         <TopRouterList></TopRouterList>
         { renderRoutes(route.routes) }
-      </TopWrapper>
+      </RightWrapper>
     </MainWrapper>
   )
 })

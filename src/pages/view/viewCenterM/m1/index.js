@@ -66,7 +66,7 @@ export default memo(function M1(props) {
     return () => {
       off(window, 'resize', resize)
     }
-  },[echarts])
+  },[])
 
   return (
     <M1Wrapper ref={M1Ref}></M1Wrapper>
