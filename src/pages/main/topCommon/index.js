@@ -24,9 +24,11 @@ export default memo(function TopCommon() {
     const logout = logoutRef.current;
     on(user, 'mouseenter', selectdisplay)
     on(logout, 'mouseleave', selecthidden)
+    on(document, 'click', selecthidden)
     return () => {
       off(user, 'mouseenter', selectdisplay)
       off(logout, 'mouseleave', selecthidden)
+      on(document, 'click', selecthidden)
     }
   },[selectShow])
   let isCollapes;

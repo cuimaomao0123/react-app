@@ -8,7 +8,6 @@ import { tipCloseChangeTopRouterList } from '@/pages/main/store/actionCreators'
 import { TopRouterListWrapper } from './style' 
 
 export default memo(function TopRouterList() {
-console.log('页面被重新渲染')
 const [position, setposition] = useState(0)
 const [selectShow, setselectShow] = useState('none');
 const dispatch = useDispatch();
@@ -24,25 +23,28 @@ const { menuList } = useSelector(state =>({
 }),shallowEqual);
 
 const changePosition = useCallback((num) => {
-  // if(num <0 && position <=0){
-  //   return;
-  // }
   setposition(position + num);
 },[position])
 
 useEffect(() => {
   const close = closeRef.current;
   const tip = tipRef.current;
-  const center = centerRef.current
   on(close, 'mouseenter', selectdisplay)
   on(tip, 'mouseleave', selecthidden)
-  on(center, 'mousewheel', scroll)
+  on(document, 'click', selecthidden)
   return () => {
     off(close, 'mouseenter', selectdisplay)
     off(tip, 'mouseleave', selecthidden)
-    off(center, 'mousewheel', scroll)
+    on(document, 'click', selecthidden)
   }
 },[])
+useEffect(() => {
+  const center = centerRef.current
+  on(center, 'mousewheel', scroll)
+  return () => {
+    off(center, 'mousewheel', scroll)
+  }
+})
 const closeTopRouterList = useCallback((type) => {
   type === 'all' && history.push(menuList[0].path)      //路由跳转到首项
   dispatch(tipCloseChangeTopRouterList(type));          //清除TopRouterList，并且清除cookie
@@ -54,33 +56,12 @@ const selecthidden = () => {
   setselectShow('none');
 } 
 const scroll = (e) => {
-  console.log(e)
-  setposition(position + 100);
+  setposition(position + e.deltaY);
 }
   return (
-    <TopRouterListWrapper position={position} selectshow={selectShow}>
+    <TopRouterListWrapper ref={centerRef} position={position} selectshow={selectShow}>
       <div className="letfMove" onClick={e => changePosition(-100)}><LeftOutlined /></div>
-      <div className="center" ref={centerRef}>
-        {
-          topRouterList.map(item => {
-            return <RouterItem key={item.key} {...item} topRouterList={topRouterList}/>
-          })
-        }
-        {
-          topRouterList.map(item => {
-            return <RouterItem key={item.key} {...item} topRouterList={topRouterList}/>
-          })
-        }
-        {
-          topRouterList.map(item => {
-            return <RouterItem key={item.key} {...item} topRouterList={topRouterList}/>
-          })
-        }
-        {
-          topRouterList.map(item => {
-            return <RouterItem key={item.key} {...item} topRouterList={topRouterList}/>
-          })
-        }
+      <div className="center">
         {
           topRouterList.map(item => {
             return <RouterItem key={item.key} {...item} topRouterList={topRouterList}/>

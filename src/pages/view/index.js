@@ -1,9 +1,14 @@
 import React, { memo } from 'react'
 
+import ViewTop from './viewTop'
+import ViewCenterM from './viewCenterM'
+import { ViewWrapper } from './style'
+
 export default memo(function View(props) {
   return (
-    <div>
-      View
-    </div>
+    <ViewWrapper>
+      <ViewTop></ViewTop>
+      <ViewCenterM></ViewCenterM>
+    </ViewWrapper>
   )
 })

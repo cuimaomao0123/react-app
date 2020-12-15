@@ -10,6 +10,7 @@ import App from './App';
 import Global from '@/pages/global'
 import PageNotFound from '@/pages/notFound'
 import "@/assets/css/reset.css";
+import "@/assets/fonts/iconfont/iconfont.css"
 
 ReactDOM.render(
   <Provider store={store}>

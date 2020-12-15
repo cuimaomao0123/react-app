@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import login_bg from '@/assets/img/login_bg.jpg';
+import login_bg from '@/assets/img/login/login_bg.jpg';
 
 export const LoginBg = styled.div`
   position: absolute;

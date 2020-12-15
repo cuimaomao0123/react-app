@@ -10,6 +10,7 @@
     "antd": "^4.9.1",
     "axios": "^0.21.0",
     "customize-cra": "^1.0.0",
+    "echarts": "^5.0.0",
     "immutable": "^4.0.0-rc.12",
     "js-cookie": "^2.2.1",
     "js-md5": "^0.7.3",
