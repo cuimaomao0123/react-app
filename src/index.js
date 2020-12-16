@@ -16,7 +16,7 @@ ReactDOM.render(
   <Provider store={store}>
     <Global></Global> 
     <HashRouter>
-      <Suspense fallback={<div>page loading</div>}>
+      <Suspense fallback={<div>page loading...</div>}>
         <Switch>                                      {/*Switch层级放错，不起效果，要尽量保证最内层，才会只匹配一个路由！！！ */}
           {
             loginRoutes.map(item => {
