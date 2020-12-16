@@ -6,11 +6,12 @@ const echarts = require('echarts');
 export default memo(function M1(props) {
   const M1Ref = useRef()
   useEffect(() => {
+    let myColor = ["#1089E7", "#1089E7", "#1089E7", "#1089E7", "#1089E7", "#DC143C", "#DC143C"];
     const myChart = echarts.init(M1Ref.current);
     let option = {
       color: ['#1296db'],
       grid: {
-        left: '3%',
+        left: '5%',
         right: '4%',
         bottom: '3%',
         // 是否显示刻度标签 如果是true 就显示 否则反之
@@ -18,6 +19,7 @@ export default memo(function M1(props) {
       },
       toolbox: {
         right: 17,
+        top: 5,
         feature: {
             saveAsImage: {
               title: '保存为图片'
@@ -25,9 +27,9 @@ export default memo(function M1(props) {
         }
       },
       title: {
-        text: '采集样本总量',
+        text: '采集样本总量(平均温度)',
         top: 10,
-        left: 10,
+        left: 5,
         textStyle: {
           fontSize: 14
         }
@@ -35,7 +37,8 @@ export default memo(function M1(props) {
       tooltip: {},
       legend: {
         data:['总人数'],
-        top: 10
+        top: 10,
+        left: '45%'
       },
       xAxis: {
         data: ["36.0~36.3","36.3~36.7","36.7~37.0","37.0~37.3","37.3~37.7","37.7~38.0","38+"],
@@ -54,7 +57,10 @@ export default memo(function M1(props) {
         data: [200, 350, 521, 126, 150, 20, 5],
         itemStyle: {
           // 修改柱子圆角
-          borderRadius : 3
+          borderRadius : 3,
+          color: function(params) {
+            return myColor[params.dataIndex];
+          }
         }
       }]
     };

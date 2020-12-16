@@ -6,6 +6,7 @@ const echarts = require('echarts');
 export default memo(function M2(props) {
   const M2Ref = useRef()
   useEffect(() => {
+    let myColor = ["#1089E7", "#F57474", "#56D0E3", "#F8B448", "#AFEEEE", "#8B78F6"];
     const myChart = echarts.init(M2Ref.current);
     let option = {
       tooltip: {
@@ -15,8 +16,8 @@ export default memo(function M2(props) {
         }
       },
       grid: {
-        left: '25%',
-        right: '1%',
+        left: '2%',
+        right: '5%',
         bottom: '3%',
         top: '10%',
         containLabel: true
@@ -41,9 +42,18 @@ export default memo(function M2(props) {
           type: 'bar',
           data: [1807, 13141, 11594, 61000, 83438, 69325],
           barWidth: "35%",
+          label: {
+            show: true,
+            // 图形内显示
+            position: "right",
+            // 文字的显示格式
+            formatter: "{c}%"
+          },
           itemStyle: {
-            // 修改柱子圆角
-            borderRadius : 10
+            borderRadius: 10,
+            color: function(params) {
+              return myColor[params.dataIndex];
+            }
           }
         }
       ]
@@ -58,7 +68,17 @@ export default memo(function M2(props) {
     }
   },[])
   return (
-    <M2Wrapper ref={M2Ref}></M2Wrapper>
+    <M2Wrapper>
+      <div className="left">
+        <i className="iconfont icon-jiesongjifuwu"></i>
+        <i className="iconfont icon-gaotiedongche"></i>
+        <i className="iconfont icon-keyunzhan"></i>
+        <i className="iconfont icon-ditie"></i>
+        <i className="iconfont icon-gudingshunanmatou"></i>
+        <i className="iconfont icon-zhandian"></i>
+      </div>
+      <div ref={M2Ref} className="right"></div>
+    </M2Wrapper>
   )
 })
  
