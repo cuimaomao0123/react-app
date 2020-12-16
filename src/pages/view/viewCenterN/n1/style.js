@@ -23,8 +23,8 @@ export const N1Wrapper = styled.div`
   .content{
     display: flex;
     flex-direction: column;
-    width: 400px;
-    height: 2.8125rem;
+    width: 5rem;
+    height: 2.75rem;
     overflow: auto;
     .content_item{
       padding: 8px 10px 0 10px;
@@ -49,7 +49,7 @@ export const N1Wrapper = styled.div`
   }
   .bottom{
     font-size: 13px;
-    padding: 0.0375rem 0.125rem;
+    padding: 0.125rem 0.125rem;
     display: flex;
     justify-content: space-between;
   }
