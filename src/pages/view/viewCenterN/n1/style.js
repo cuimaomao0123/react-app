@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const N1Wrapper = styled.div`
   position: relative;
   background-color: #ffffff;
-  height: 3.75rem;
+  height: 4rem;
   width: 4.75rem;
   border-radius: 4px;
   border: 1px solid #ebeef5;
@@ -49,7 +49,7 @@ export const N1Wrapper = styled.div`
   }
   .bottom{
     font-size: 13px;
-    padding: 0.125rem 0.125rem;
+    padding: 0.3125rem 0.125rem 0 0.125rem;
     display: flex;
     justify-content: space-between;
   }

@@ -18,7 +18,7 @@ export default memo(function M2(props) {
       grid: {
         left: '2%',
         right: '5%',
-        bottom: '3%',
+        bottom: '2%',
         top: '10%',
         containLabel: true
       },

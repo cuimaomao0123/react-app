@@ -64,7 +64,7 @@ export default memo(function N2() {
         />
         <div className="bottom">
           <p style={{textDecoration: 'underline'}}><ArrowDownOutlined style={{fontSize: '15px', marginRight: '5px'}}/>向下滚动查看更多内容</p>
-          <p>异常推送数据实时更新</p>
+          <p>异常快照实时更新</p>
         </div>
       </div>
     </N2Wrapper>

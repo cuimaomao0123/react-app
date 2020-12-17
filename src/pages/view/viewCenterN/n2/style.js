@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const N2Wrapper = styled.div`
   position: relative;
   background-color: #ffffff;
-  height: 3.75rem;
+  height: 4rem;
   width: 5.125rem;
   border-radius: 4px;
   border: 1px solid #ebeef5;

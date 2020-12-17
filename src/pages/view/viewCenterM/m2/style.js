@@ -4,7 +4,7 @@ export const M2Wrapper = styled.div`
   display: flex;
   background-color: #ffffff;
   margin-left: 0.3125rem;
-  height: 3.75rem;
+  height: 3.875rem;
   width: 5.125rem;
   border-radius: 4px;
   border: 1px solid #ebeef5;
