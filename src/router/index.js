@@ -41,9 +41,9 @@ export const routes = [           //需要权限的路由(登录进入主页面�
         component: View
       },
       {
-        path: "/home/abnormalImage",
-        title: '异常图像',
-        component: AbnormalImage
+        path: "/home/personalInfo", 
+        title: '人员信息',
+        component: PersonalInfo
       },
       {
         render: () => (
@@ -62,13 +62,13 @@ export const routes = [           //需要权限的路由(登录进入主页面�
         path: "/infoCollect",
         exact: true,
         render: () => (
-          <Redirect to="/infoCollect/personalInfo"/>
+          <Redirect to="/infoCollect/abnormalImage"/>
         )
       },
       {
-        path: "/infoCollect/personalInfo",
-        title: "人员信息",
-        component: PersonalInfo
+        path: "/infoCollect/abnormalImage",
+        title: "异常图像",
+        component: AbnormalImage
       },
       {
         path: "/infoCollect/abnormalTracking",

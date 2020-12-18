@@ -6,6 +6,8 @@ import { loginRoutes, routes } from '@/router'
 import store from './store';
 import { Provider } from 'react-redux';
 
+import { ConfigProvider } from 'antd';          //antd提供的国际化语言包
+import zhCN from 'antd/lib/locale/zh_CN';       //antd提供的国际化语言包
 import App from './App';
 import Global from '@/pages/global'
 import PageNotFound from '@/pages/notFound'
@@ -13,7 +15,8 @@ import "@/assets/css/reset.css";
 import "@/assets/fonts/iconfont/iconfont.css"
 
 ReactDOM.render(
-  <Provider store={store}>
+  <ConfigProvider locale={zhCN}>
+    <Provider store={store}>
     <Global></Global> 
     <HashRouter>
       <Suspense fallback={<div>page loading...</div>}>
@@ -33,7 +36,8 @@ ReactDOM.render(
         </Switch>
       </Suspense>
     </HashRouter>
-  </Provider>,
+    </Provider>
+  </ConfigProvider>,
   document.getElementById('root')
 );
 // If you want to start measuring performance in your app, pass a function

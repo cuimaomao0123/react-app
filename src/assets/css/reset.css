@@ -31,3 +31,13 @@ body, textarea, select, input, button {
   text-overflow: ellipsis;
   overflow: hidden;
 }
+
+/*修改ant-design组件库全局样式*/
+.ant-btn{                     /*按钮样式*/
+  border-radius: 4px;
+  color: #515a6e;
+  font-size: 12px;
+}   
+.ant-btn .anticon{
+  font-size: 10px !important;
+}

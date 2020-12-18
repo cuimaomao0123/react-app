@@ -1,4 +1,6 @@
 import axios from 'axios';
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css';
 
 import { BASE_URL, TIMEOUT } from "./config";
 import { getToken } from '@/utils'
@@ -11,6 +13,7 @@ const request = (config) => {
   
   instance.interceptors.request.use(config => {
     // 1.发送网络请求时, 在界面的中间位置显示Loading的组件
+    NProgress.start();
   
     // 2.某一些请求要求用户必须携带token, 如果没有携带, 那么直接跳转到登录页面
     const token = getToken()
@@ -23,6 +26,7 @@ const request = (config) => {
   });
   
   instance.interceptors.response.use(res => {
+    NProgress.done();
     return res.data;
   }, err => {
     if (err && err.response) {
