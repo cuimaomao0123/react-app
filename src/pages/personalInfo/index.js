@@ -31,10 +31,10 @@ export default memo(function PersonalInfo() {
   },[])
   const paegChange = useCallback((page, pageSize) => {
     dispatch({type: 'change_page', payload: page})
-  })
+  },[])
   const paegSizeChange = useCallback((current, size) => {
     dispatch({type: 'change_page_size', payload: size})
-  })
+  },[])
   const onSelectChange = (selectedRowKeys) => {
     console.log('selectedRowKeys changed: ', selectedRowKeys);
     setselection(selectedRowKeys);

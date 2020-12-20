@@ -33,8 +33,8 @@ export default memo(function Login(props) {
           username: username,
           password: md5(password)
         }, method: "post" }).then(res => {
-        if(res.code ===200) {
-          setToken(res.data.token)
+        if(res.code === 200) {
+          setToken(res.data.token, res.data.expireTime)
           message.success(res.msg)
           props.history.push("/home")
         }else {

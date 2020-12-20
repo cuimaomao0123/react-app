@@ -24,7 +24,7 @@ export const N1Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     width: 5rem;
-    height: 2.75rem;
+    height: 2.75rem; 
     overflow: auto;
     .content_item{
       padding: 8px 10px 0 10px;

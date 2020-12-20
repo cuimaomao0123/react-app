@@ -12,12 +12,14 @@ const request = (config) => {
   });
   
   instance.interceptors.request.use(config => {
+    
     // 1.发送网络请求时, 在界面的中间位置显示Loading的组件
     NProgress.start();
-  
     // 2.某一些请求要求用户必须携带token, 如果没有携带, 那么直接跳转到登录页面
-    const token = getToken()
-    config.headers['token'] = token
+    if(!config.url === "/admin/login"){
+      const token = getToken()
+      config.headers['token'] = token
+    }
     // 3.params/data序列化的操作
   
     return config;
