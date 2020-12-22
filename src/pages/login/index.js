@@ -108,7 +108,7 @@ export default memo(function Login(props) {
         <Input prefix={<LockOutlined className="site-form-item-icon" />} placeholder="请输入验证码" />
       </Form.Item>
       <Form.Item {...butlayout}>
-        <Button type="primary" htmlType="submit" block>
+        <Button type="primary" htmlType="submit" block className="login">
           登录
         </Button>
       </Form.Item>

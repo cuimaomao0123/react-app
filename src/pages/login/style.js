@@ -38,4 +38,7 @@ export const LoginBox = styled.div`
     height: 32px;
     width: 95px;
   }
+  .login{
+    color: #ffffff;
+  }
 `
