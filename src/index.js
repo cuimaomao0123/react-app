@@ -19,7 +19,7 @@ ReactDOM.render(
     <Provider store={store}>
     <Global></Global> 
     <HashRouter>
-      <Suspense fallback={<div>page loading...</div>}>
+      <Suspense fallback={<></>}>                     {/*页面还在请求中，什么也不显示其实效果更好(首屏空白) */}
         <Switch>                                      {/*Switch层级放错，不起效果，要尽量保证最内层，才会只匹配一个路由！！！ */}
           {
             loginRoutes.map(item => {
@@ -31,7 +31,7 @@ ReactDOM.render(
               return <Route key={item.path} path={item.path} render={routeProps => <App {...routeProps}/>} />
             })
           }
-          <Redirect to="/home" from="/" />
+          <Redirect to="/home" from="/" exact/>
           <Route component={PageNotFound}/>
         </Switch>
       </Suspense>

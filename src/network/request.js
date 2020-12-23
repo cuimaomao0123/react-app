@@ -19,7 +19,6 @@ const request = (config) => {
     if(!(config.url === "/admin/login")){
       const token = getToken()
       config.headers['token'] = token
-      console.log(1111)
     }
     // 3.params/data序列化的操作
   

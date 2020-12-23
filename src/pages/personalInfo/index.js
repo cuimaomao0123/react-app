@@ -1,16 +1,16 @@
 import React, { memo, useEffect, useState, useCallback, useReducer } from 'react'
-import { Row, Col, Button, Input, Table } from 'antd';
+import { Row, Col, Button, Input, Checkbox } from 'antd';
 import { ReloadOutlined, SearchOutlined } from '@ant-design/icons';
-import Page from '@/components/pagination'
 import { on, off } from '@/utils'
 import { PersonalInfoWrapper } from './style'
 import{ column1, tableData } from './tableData'  
 import reducer from './reducer'
-
+import VirtualTable from '@/components/virtualTable'
+import Page from '@/components/pagination'
 export default memo(function PersonalInfo() {
 
   const [data, setdata] = useState(tableData);
-  const [selection, setselection] = useState([]);
+  const [column, setcolumn] = useState(column1)
   const [y, sety] = useState(650);
   const [state, dispatch] = useReducer(reducer, {
     total: 30,
@@ -21,8 +21,16 @@ export default memo(function PersonalInfo() {
     const data = [...tableData];
     data.forEach((item,index) => {
       item['index'] = index + 1;
+      item['selection'] = false;
     })
-    setdata(data)
+    const column = [...column1]
+    column.forEach(item => {
+      if(item.dataIndex === 'selection'){
+        item['title'] = () => <Checkbox />
+      }
+    })
+    setcolumn(column);
+    setdata(data);
     sety(document.body.offsetHeight - 270);
     on(window, 'resize', dealTableHeight)
     return () => {
@@ -35,14 +43,16 @@ export default memo(function PersonalInfo() {
   const paegSizeChange = useCallback((current, size) => {
     dispatch({type: 'change_page_size', payload: size})
   },[])
-  const onSelectChange = (selectedRowKeys) => {
-    console.log('selectedRowKeys changed: ', selectedRowKeys);
-    setselection(selectedRowKeys);
-  };
-  const rowSelection = {
-    selection,
-    columnWidth: '60px',
-    onChange: onSelectChange,
+  const onSelectChange = (rowData) => {
+    const tableData = [...data];
+    tableData.forEach(item => {
+      if(item.id === rowData.id){
+        item.selection = !item.selection;
+        return;
+       }
+    })
+    setdata(tableData)
+    // console.log('selectedRowKeys changed: ', rowData);
   };
   const dealTableHeight = () => {
     sety(document.body.offsetHeight - 270);
@@ -58,15 +68,13 @@ export default memo(function PersonalInfo() {
           <Input className="search" placeholder="搜索..." suffix={<SearchOutlined />}/>
         </Col>
       </Row>
-      <Row style={{marginTop: '10px'}}>
-        <Table columns={column1} 
-               dataSource={data} 
-               bordered={true}
-               rowSelection={rowSelection}
-               pagination={false}
-               scroll={{y: y}}
-               rowKey="id"/>
-      </Row>
+      <VirtualTable dataSource={data}
+                    columns={column} 
+                    bordered={true}
+                    scroll={{y: y, x:'100vw'}}
+                    tableClassName="table"
+                    onSelectChange={onSelectChange}
+      />
       <Page {...{total: state.total, limitPage: state.limitPage, limitCount: state.limitCount, onChange: paegChange, onShowSizeChange: paegSizeChange}}></Page>
     </PersonalInfoWrapper>
   )

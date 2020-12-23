@@ -99,6 +99,11 @@ export const routes = [           //需要权限的路由(登录进入主页面�
         path: "/device/deviceDetail",
         title: "设备查询",
         component: DeviceDetail
+      },
+      {
+        render: () => (
+          <Redirect to="/404" from="*"/>
+        )
       }
     ]
   }

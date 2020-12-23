@@ -73,6 +73,7 @@ export const TopRouterListWrapper = styled.div`
     }
   }
   .closeTip{
+    z-index: 10;
     position: absolute;
     top: 40px;
     right: -20px;
