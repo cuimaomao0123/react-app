@@ -11,8 +11,14 @@ export const PersonalInfoWrapper = styled.div`
     padding: 8px 2px;
     font-size: 13px;
   }
+  .ant-table.ant-table-bordered > .ant-table-container {
+    border: 1px solid rgb(221,221,221);
+  }
   .ant-table-thead > tr > th{
     background-color: #ffffff;
+  }
+  .ant-table.ant-table-bordered > .ant-table-container > .ant-table-header > table > thead > tr > th{
+    border-right: 1px solid rgb(221,221,221);
   }
   .table{
     margin-top: 10px;

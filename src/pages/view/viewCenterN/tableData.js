@@ -1,4 +1,4 @@
-import Zmage from 'react-zmage'        //第三方预览图片组件
+import { Image } from 'antd';
 
 export const column1 = [
   { title: '状态',
@@ -30,10 +30,9 @@ export const column1 = [
     textWrap: 'word-break',
     ellipsis: true,
     render: (img) => 
-      <Zmage className="zmage" 
+      <Image className="zmage" 
              src={img} 
              alt="加载中..."
-             controller={{zoom: false, rotate: false, flip: false, pagination: false, close: false}}
       />
   }
 ]
