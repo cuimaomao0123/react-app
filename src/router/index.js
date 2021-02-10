@@ -1,14 +1,26 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 
-const Main = React.lazy(() => import("@/pages/main"));          //路由懒加载
-const Login = React.lazy(() => import("@/pages/login"));
-const PageNotFound = React.lazy(() => import("@/pages/notFound"));
-const View = React.lazy(() => import("@/pages/view"));
-const AbnormalImage = React.lazy(() => import("@/pages/abnormalImage"));
-const PersonalInfo = React.lazy(() => import("@/pages/personalInfo"));
-const AbnormalTracking = React.lazy(() => import("@/pages/abnormalTracking"));
-const DeviceDetail = React.lazy(() => import("@/pages/deviceDetail"));
+// const Main = React.lazy(() => import("@/pages/main"));          //路由懒加载
+// const Login = React.lazy(() => import("@/pages/login"));
+// const PageNotFound = React.lazy(() => import("@/pages/notFound"));
+// const View = React.lazy(() => import("@/pages/view"));
+// const AbnormalImage = React.lazy(() => import("@/pages/abnormalImage"));
+// const PersonalInfo = React.lazy(() => import("@/pages/personalInfo"));
+// const AbnormalTracking = React.lazy(() => import("@/pages/abnormalTracking"));
+// const DeviceDetail = React.lazy(() => import("@/pages/deviceDetail"));
+// const Monitoring = React.lazy(() => import("@/pages/monitoring"));
+
+import Main from '@/pages/main'
+import Login from '@/pages/login'
+import PageNotFound from '@/pages/notFound'
+import View from '@/pages/view'
+import AbnormalImage from '@/pages/abnormalImage'
+import PersonalInfo from '@/pages/personalInfo'
+import AbnormalTracking from '@/pages/abnormalTracking'
+import DeviceDetail from '@/pages/deviceDetail'
+import Monitoring from '@/pages/monitoring'
+
 
 export const loginRoutes = [        //不需要权限的路由
   {
@@ -99,6 +111,31 @@ export const routes = [           //需要权限的路由(登录进入主页面�
         path: "/device/deviceDetail",
         title: "设备查询",
         component: DeviceDetail
+      },
+      {
+        render: () => (
+          <Redirect to="/404" from="*"/>
+        )
+      }
+    ]
+  },
+  {
+    path: "/monitoring",
+    title: '实时监控',
+    component: Main,
+    icon: "SafetyCertificateOutlined",
+    routes: [
+      {
+        path: "/monitoring",
+        exact: true,
+        render: () => (
+          <Redirect to="/monitoring/monitoring"/>
+        )
+      },
+      {
+        path: "/monitoring/monitoring",
+        title: "设备查询",
+        component: Monitoring
       },
       {
         render: () => (

@@ -34,11 +34,11 @@ export const dealMenuList = (data) => {
 
 export const getToken = () => {
   let reactToken = JSON.parse(localStorage.getItem('react_token'));
-  if(new Date().getTime() < Number(reactToken && reactToken.expireTime)){
+  if(new Date().getTime() < Number(reactToken && reactToken.expireTime) - 1*60*60){
     return reactToken.token;
   }else{
     removeToken();
-    return null;
+    return null;  
   }
 }
 

@@ -46,7 +46,7 @@ export default memo(function AbnormalTracking() {
       dispatch({type: "change_loading", payload: false})
     })
   }
-  const paegChange = useCallback((page, pageSize) => {
+  const pageChange = useCallback((page, pageSize) => {
     dispatch({type: 'change_page', payload: page})
     !(page === state.current) && refresh(page, state.size);   //eslint-disable-next-line
   },[state])
@@ -108,7 +108,7 @@ export default memo(function AbnormalTracking() {
   }
   return (
     <AbnormalTrackingWrapper>
-      <Row justify="space-between" align="middle">
+      <Row justify="space-between" align="middle" style={{marginTop: '15px'}}>
         <Col>
           <Button icon={<ReloadOutlined/>} onClick={e => refresh(state.current, state.size)}></Button>
         </Col>
@@ -131,7 +131,7 @@ export default memo(function AbnormalTracking() {
                loading={state.loading}
                rowKey="id"/>
       </Row>
-      <Page {...{total: state.total, limitPage: state.current, limitCount: state.size, onChange: paegChange, onShowSizeChange: paegSizeChange}}></Page>
+      <Page {...{total: state.total, limitPage: state.current, limitCount: state.size, onChange: pageChange, onShowSizeChange: paegSizeChange}}></Page>
     </AbnormalTrackingWrapper>
   )
 })

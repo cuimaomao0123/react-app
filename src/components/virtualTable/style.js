@@ -9,4 +9,8 @@ export const VirtualTableWrapper = styled.div`
    border-bottom: 1px solid #f0f0f0;
    box-sizing: border-box;
  }
+ .ant-table-thead > tr > th, .ant-table-tbody > tr > td, .ant-table tfoot > tr > th, .ant-table tfoot > tr > td{
+     padding: 8px 2px;
+     background: #ffffff;
+   }
 `
