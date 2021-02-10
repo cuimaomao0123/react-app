@@ -78,12 +78,13 @@ export default memo(function VirtualTable(props) {
           });
         }}
       >
-        {({ columnIndex, rowIndex, style }) => {
+        {({ columnIndex, rowIndex, style }) => {                              //主体内容
           if(mergedColumns[columnIndex].dataIndex !== 'selection'){           //常规元素
             return (
               <div className={['virtual-table-cell', 
                                 gridCellClassName ? gridCellClassName :"", 
-                                columnIndex === mergedColumns.length - 1 ? 'virtual-table-cell-last' : ""
+                                columnIndex === mergedColumns.length - 1 ? 'virtual-table-cell-last' : "",
+                                rawData[rowIndex]['isSelect'] ? 'selectClass':""
                               ].filter(item => item !== "").join(" ").trim()} 
                                 style={style}>
                 {rawData[rowIndex][mergedColumns[columnIndex].dataIndex]}
@@ -93,14 +94,14 @@ export default memo(function VirtualTable(props) {
             return (
               <div className={['virtual-table-cell', 
                                 gridCellClassName ? gridCellClassName :"", 
-                                columnIndex === mergedColumns.length - 1 ? 'virtual-table-cell-last' : ""
+                                columnIndex === mergedColumns.length - 1 ? 'virtual-table-cell-last' : "",
+                                rawData[rowIndex]['isSelect'] ? 'selectClass':""
                               ].filter(item => item !== "").join(" ").trim()} 
                                 style={style}>
-                <Checkbox checked={rawData[rowIndex][mergedColumns[columnIndex].dataIndex]} onChange={e => onSelectChange(rawData[rowIndex])}/>
+                <Checkbox checked={rawData[rowIndex]['isSelect']} onChange={e => onSelectChange(rawData[rowIndex])}/>
               </div>
             );
           }
-          
         }}
       </Grid>
     );

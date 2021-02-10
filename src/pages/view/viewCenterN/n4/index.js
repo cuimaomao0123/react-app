@@ -1,7 +1,6 @@
 import React, { memo } from 'react'
-import { Select } from 'antd';
+import { Select, Image } from 'antd';
 import { MehOutlined } from '@ant-design/icons';
-import Zmage from 'react-zmage'        //第三方预览图片组件
 import { N4Wrapper } from './style'
 const { Option } = Select;
 
@@ -32,10 +31,9 @@ export default memo(function N4() {
           <p>设备工作时长：20h</p>
         </div>
         <div className="device_img">
-        <Zmage className="zmage" 
+        <Image className="zmage" 
                src={img} 
                alt="加载中..."
-               controller={{zoom: false, rotate: false, flip: false, pagination: false, close: false}}
         />
         </div>
       </div>

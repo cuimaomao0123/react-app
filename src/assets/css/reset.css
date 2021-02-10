@@ -39,5 +39,5 @@ body, textarea, select, input, button {
   font-size: 12px;
 }   
 .ant-btn .anticon{
-  font-size: 10px !important;
+  font-size: 10px;
 }
