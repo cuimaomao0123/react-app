@@ -1,5 +1,11 @@
-import { Image } from 'antd';
 export const column1 = [
+  { dataIndex: 'selection',
+    key: 'selection',
+    align: 'center',
+    textWrap: 'word-break',
+    ellipsis: true,
+    width: 60
+  },
   { title: '序号',
     dataIndex: 'index',
     key: 'index',
@@ -29,63 +35,46 @@ export const column1 = [
     textWrap: 'word-break',
     ellipsis: true
   },
-  { title: '设备名称',
+  { title: '设备号',
     dataIndex: 'facilityName',
     key: 'facilityName',
     align: 'center',
     textWrap: 'word-break',
     ellipsis: true
   },
-  { title: '最高温度℃',
+  { title: '最高温度',
     dataIndex: 'max',
     key: 'max',
     align: 'center',
     textWrap: 'word-break',
-    ellipsis: true,
-    render: data => {
-      return `${data} ℃`;
-    }
+    ellipsis: true
   },
-  { title: '最低温度℃',
+  { title: '最低温度',
     dataIndex: 'min',
     key: 'min',
     align: 'center',
     textWrap: 'word-break',
-    ellipsis: true,
-    render: data => {
-      return `${data} ℃`;
-    }
+    ellipsis: true
   },
-  { title: '中心温度℃',
+  { title: '中心温度',
     dataIndex: 'center',
     key: 'center',
     align: 'center',
     textWrap: 'word-break',
-    ellipsis: true,
-    render: data => {
-      return `${data} ℃`;
-    }
+    ellipsis: true
   },
-  { title: '平均温度 ℃',
+  { title: '平均温度',
     dataIndex: 'average',
     key: 'average',
     align: 'center',
     textWrap: 'word-break',
-    ellipsis: true,
-    render: data => {
-      return `${data} ℃`;
-    }
+    ellipsis: true
   },
   { title: '图像',
     dataIndex: 'pictureUrl',
     key: 'pictureUrl',
     align: 'center',
     textWrap: 'word-break',
-    ellipsis: true,
-    render: (data) => {
-      return <Image 
-      src={data}
-      width={100}/>;
-    }
+    ellipsis: true
   }
 ]

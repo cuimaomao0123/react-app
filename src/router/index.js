@@ -6,7 +6,7 @@ import { Redirect } from 'react-router-dom';
 // const PageNotFound = React.lazy(() => import("@/pages/notFound"));
 // const View = React.lazy(() => import("@/pages/view"));
 // const AbnormalImage = React.lazy(() => import("@/pages/abnormalImage"));
-// const PersonalInfo = React.lazy(() => import("@/pages/personalInfo"));
+// const SampleInfo = React.lazy(() => import("@/pages/sampleInfo"));
 // const AbnormalTracking = React.lazy(() => import("@/pages/abnormalTracking"));
 // const DeviceDetail = React.lazy(() => import("@/pages/deviceDetail"));
 // const Monitoring = React.lazy(() => import("@/pages/monitoring"));
@@ -16,10 +16,11 @@ import Login from '@/pages/login'
 import PageNotFound from '@/pages/notFound'
 import View from '@/pages/view'
 import AbnormalImage from '@/pages/abnormalImage'
-import PersonalInfo from '@/pages/personalInfo'
+import SampleInfo from '@/pages/sampleInfo'
 import AbnormalTracking from '@/pages/abnormalTracking'
 import DeviceDetail from '@/pages/deviceDetail'
 import Monitoring from '@/pages/monitoring'
+import SystemControl from '@/pages/systemControl'
 
 
 export const loginRoutes = [        //不需要权限的路由
@@ -53,9 +54,9 @@ export const routes = [           //需要权限的路由(登录进入主页面�
         component: View
       },
       {
-        path: "/home/personalInfo", 
-        title: '人员信息',
-        component: PersonalInfo
+        path: "/home/sampleInfo", 
+        title: '样本信息',
+        component: SampleInfo
       },
       {
         render: () => (
@@ -98,7 +99,7 @@ export const routes = [           //需要权限的路由(登录进入主页面�
     path: "/device",
     title: '设备管理',
     component: Main,
-    icon: "SettingOutlined",
+    icon: "DesktopOutlined",
     routes: [
       {
         path: "/device",
@@ -123,7 +124,7 @@ export const routes = [           //需要权限的路由(登录进入主页面�
     path: "/monitoring",
     title: '实时监控',
     component: Main,
-    icon: "SafetyCertificateOutlined",
+    icon: "PlaySquareOutlined",
     routes: [
       {
         path: "/monitoring",
@@ -134,8 +135,33 @@ export const routes = [           //需要权限的路由(登录进入主页面�
       },
       {
         path: "/monitoring/monitoring",
-        title: "设备查询",
+        title: "视频输出",
         component: Monitoring
+      },
+      {
+        render: () => (
+          <Redirect to="/404" from="*"/>
+        )
+      }
+    ]
+  },
+  {
+    path: "/systemControl",
+    title: '系统管理',
+    component: Main,
+    icon: "SettingOutlined",
+    routes: [
+      {
+        path: "/systemControl",
+        exact: true,
+        render: () => (
+          <Redirect to="/systemControl/systemControl"/>
+        )
+      },
+      {
+        path: "/systemControl/systemControl",
+        title: "系统管理",
+        component: SystemControl
       },
       {
         render: () => (

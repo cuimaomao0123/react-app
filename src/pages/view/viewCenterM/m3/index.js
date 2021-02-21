@@ -3,7 +3,8 @@ import { on, off } from '@/utils'
 import { M3Wrapper } from './style'
 const echarts = require('echarts');
 
-export default memo(function M3() {
+export default memo(function M3(props) {
+  const { chartData } = props;
   const M3Ref = useRef()
   useEffect(() => {
     const myChart = echarts.init(M3Ref.current);
@@ -65,13 +66,13 @@ export default memo(function M3() {
           name: '男',
           type: 'line',
           stack: '总量',
-          data: [200, 120, 132, 101, 134, 90, 230, 210]
+          data: [chartData.nan1, chartData.nan2, chartData.nan3, chartData.nan4, chartData.nan5, chartData.nan6, chartData.nan7, chartData.nan8]
         },
         {
           name: '女',
           type: 'line',
           stack: '总量',
-          data: [50, 220, 182, 191, 234, 290, 330, 310]
+          data: [chartData.nv1, chartData.nv2, chartData.nv3, chartData.nv4, chartData.nv5, chartData.nv6, chartData.nv7, chartData.nv8]
         }
       ]
   };
@@ -82,8 +83,8 @@ export default memo(function M3() {
     on(window, 'resize', resize)
     return () => {
       off(window, 'resize', resize)
-    }
-  },[])
+    } 
+  },[chartData])
   return (
     <M3Wrapper ref={M3Ref}> </M3Wrapper>
   )

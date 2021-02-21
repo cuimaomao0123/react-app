@@ -4,7 +4,8 @@ import { M2Wrapper } from './style'
 const echarts = require('echarts');
 
 export default memo(function M2(props) {
-  const M2Ref = useRef()
+  const M2Ref = useRef();
+  const { chartData } = props;
   useEffect(() => {
     let myColor = ["#1089E7", "#F57474", "#56D0E3", "#F8B448", "#AFEEEE", "#8B78F6"];
     const myChart = echarts.init(M2Ref.current);
@@ -17,7 +18,7 @@ export default memo(function M2(props) {
       },
       grid: {
         left: '2%',
-        right: '5%',
+        right: '10%',
         bottom: '2%',
         top: '10%',
         containLabel: true
@@ -40,7 +41,7 @@ export default memo(function M2(props) {
         {
           name: '场所',
           type: 'bar',
-          data: [1807, 13141, 11594, 61000, 83438, 69325],
+          data: [chartData.site6, chartData.site5, chartData.site4, chartData.site3, chartData.site2, chartData.site1],
           barWidth: "35%",
           label: {
             show: true,
@@ -65,8 +66,8 @@ export default memo(function M2(props) {
     on(window, 'resize', resize)
     return () => {
       off(window, 'resize', resize)
-    }
-  },[])
+    } 
+  },[chartData])
   return (
     <M2Wrapper>
       <div className="left">

@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useReducer } from 'react';
-import { ReloadOutlined, SearchOutlined } from '@ant-design/icons';
-import { Row, Col, Button, Input, Table, message } from 'antd';
+import { ReloadOutlined, SearchOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
+import { Row, Col, Button, Input, Table, message, Modal } from 'antd';
 import Page from '@/components/pagination'
 import { getList, deleteById, search } from '@/services/deviceDetail'
 import reducer from './reducer'
@@ -48,16 +48,26 @@ export default memo(function DeviceDetail() {
     dispatch({type: 'change_selection_key', payload: selectedRowKeys})
   }
   const deleteWithId = async () => {
-    if(state.selectionKey.length === 0){
+    if(state.selectionKey.length <= 0){
       message.warning('请选择删除项');
     }else{
-      const res = await deleteById({
-        ids: state.selectionKey
+      Modal.confirm({
+        title: '警告',
+        icon: <ExclamationCircleOutlined />,
+        content: '确认删除选内容吗？',
+        okText: '确认',
+        cancelText: '取消',
+        onOk: deleteOk
       })
-      if(res.code === 200){
-        refresh(state.pageNum, state.size); 
-        message.success('删除成功')
-      }
+    }
+  }
+  const deleteOk = async() => {
+    const res = await deleteById({
+      ids: state.selectionKey
+    })
+    if(res.code === 200){
+      refresh(state.pageNum, state.size); 
+      message.success('删除成功')
     }
   }
   const searchName = async (e) => {
@@ -90,7 +100,7 @@ export default memo(function DeviceDetail() {
         </Col>
         <Col>
           <Button style={{marginLeft: '5px'}} onClick={deleteWithId}>删除</Button>
-          <Input style={{width: '170px', marginLeft: '5px'}} placeholder="搜索..." onChange={searchInput} suffix={<SearchOutlined />}/>
+          <Input style={{width: '170px', marginLeft: '5px'}} placeholder="(设备名)搜索..." onChange={searchInput} suffix={<SearchOutlined />}/>
         </Col>
       </Row>
       <Table className="table"

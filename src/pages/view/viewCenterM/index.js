@@ -4,13 +4,13 @@ import M2 from './m2'
 import M3 from './m3'
 import { ViewCenterMWrapper } from './style'
 
-export default memo(function ViewCenterM() {
+export default memo(function ViewCenterM(props) {
 
   return (
     <ViewCenterMWrapper>
-      <M1></M1>
-      <M2></M2>
-      <M3></M3>
+      <M1 {...props}></M1>
+      <M2 {...props}></M2>
+      <M3 {...props}></M3>
     </ViewCenterMWrapper>
   )
 })

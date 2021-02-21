@@ -1,15 +1,16 @@
 import React, { memo, useEffect, useState, useCallback, useReducer } from 'react'
 import { Row, Col, Button, Input, Checkbox } from 'antd';
 import { ReloadOutlined, SearchOutlined, VerticalAlignBottomOutlined } from '@ant-design/icons';
-import { on, off } from '@/utils'
-import { PersonalInfoWrapper } from './style'
-import{ column1, tableData } from './tableData'  
-import reducer from './reducer'
 import VirtualTable from './components/virtualTable'
 import Page from '@/components/pagination'
-export default memo(function PersonalInfo() {
+import { getList } from '@/services/sampleInfo'
+import { on, off } from '@/utils'
+import { SampleInfoWrapper } from './style'
+import{ column1 } from './tableData'  
+import reducer from './reducer'
+export default memo(function SampleInfo() {
 
-  const [data, setdata] = useState(tableData);
+  const [list, setlist] = useState([]);
   const [column, setcolumn] = useState(column1);
   const [y, sety] = useState(650);
   const [state, dispatch] = useReducer(reducer, {
@@ -17,32 +18,50 @@ export default memo(function PersonalInfo() {
     limitPage: 1,
     limitCount: 10,
     indeterminate: false,
-    isSelectAll: false
+    isSelectAll: false,
+    size: 30,
+    current: 1,
+    siteId: ""
   });
   useEffect(() => {
     sety(document.body.offsetHeight - 270);
     on(window, 'resize', dealTableHeight)
+    refresh(state.current, state.size, state.siteId);
     return () => {
       off(window, 'resize', dealTableHeight)
-    }   
+    }               //eslint-disable-next-line
   },[])
   useEffect(() => {
     const column = [...column1]
-    const data = [...tableData];
-    data.forEach((item,index) => {
-      item['index'] = index + 1;
-      item['selection'] = false;
-    })
     column.forEach(item => {
       if(item.dataIndex === 'selection'){                       
         item['title'] = () => <Checkbox onClick={selectAll} checked={state.isSelectAll} indeterminate={state.indeterminate}/>     
       }
     })
-    setcolumn(column);
-    setdata(data);                                  //eslint-disable-next-line
-  },[state])                                                           
+    setcolumn(column);  //eslint-disable-next-line
+  },[state])     
+  const refresh = async(current, size, siteId) => {
+    const res = await getList({
+      current,
+      size,
+      siteId
+    });
+    if(res.code === 200){
+      const list = dealList(res.data.records);
+      setlist(list);                                  
+    }
+  }
+  const dealList = (array) => {
+    const data = [...array];
+    data.forEach((item,index) => {
+      item['index'] = index + 1;
+      item['selection'] = false;
+      item['isSelect'] = false;
+    })
+    return data;
+  }                                                      
   const selectAll = useCallback(() => {
-    const data = [...tableData];
+    const data = [...list];
     if(data.every(item => item.isSelect === true)){                       //全部选中，取消
       dispatch({type: 'change_is_select_all', payload: false})    
       data.forEach(item => item.isSelect = false);
@@ -54,8 +73,8 @@ export default memo(function PersonalInfo() {
       data.forEach(item => item.isSelect = true);
     }
     dispatch({type: 'change_indeterminate', payload: false})
-    setdata(data);
-  },[])
+    setlist(data);
+  },[list])
   const paegChange = useCallback((page, pageSize) => {
     dispatch({type: 'change_page', payload: page})
   },[])
@@ -63,7 +82,7 @@ export default memo(function PersonalInfo() {
     dispatch({type: 'change_page_size', payload: size})
   },[])
   const onSelectChange = (rowData) => {
-    const tableData = [...data];
+    const tableData = [...list];
     tableData.forEach(item => {
       if(item.id === rowData.id){
         item.isSelect = !item.isSelect;
@@ -82,14 +101,14 @@ export default memo(function PersonalInfo() {
       dispatch({type: 'change_indeterminate', payload: false})
       dispatch({type: 'change_is_select_all', payload: false})
     }
-    setdata(tableData)
+    setlist(tableData)
     // console.log('selectedRowKeys changed: ', rowData);
   };
   const dealTableHeight = () => {
     sety(document.body.offsetHeight - 270);
   }
   return (
-    <PersonalInfoWrapper>
+    <SampleInfoWrapper>
       <Row justify="space-between" align="middle">
         <Col>
           <Button icon={<ReloadOutlined/>}></Button>
@@ -100,7 +119,7 @@ export default memo(function PersonalInfo() {
           <Input className="search" placeholder="搜索..." suffix={<SearchOutlined />}/>
         </Col>
       </Row>
-      <VirtualTable dataSource={data}
+      <VirtualTable dataSource={list}
                     columns={column}
                     bordered={true}
                     scroll={{y: y, x:'100vw'}}
@@ -108,6 +127,6 @@ export default memo(function PersonalInfo() {
                     onSelectChange={onSelectChange}
       />
       <Page {...{total: state.total, limitPage: state.limitPage, limitCount: state.limitCount, onChange: paegChange, onShowSizeChange: paegSizeChange}}></Page>
-    </PersonalInfoWrapper>
+    </SampleInfoWrapper>
   )
 })

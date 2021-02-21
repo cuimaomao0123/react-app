@@ -1,6 +1,7 @@
 import React, { memo, useReducer, useEffect, useCallback } from 'react'
-import { Row, Col, Button, Input, Table, message } from 'antd';
-import { ReloadOutlined, SearchOutlined } from '@ant-design/icons';
+import { Row, Col, Button, Input, Table, message, Modal } from 'antd';
+import AddComponent from './addComponent'
+import { ReloadOutlined, SearchOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import Page from '@/components/pagination'
 import { on, off } from '@/utils'
 import request from '@/network/request'
@@ -12,21 +13,24 @@ export default memo(function AbnormalTracking() {
   const [state, dispatch] = useReducer(reducer, {
     current: 1,
     size: 50,
+    name: "",
     data: [],
     total: 0,
     y: 650,
     loading: true,
-    selection: []
+    selection: [],
+    isShow: false,
+    timer: null
   })
   useEffect(() => {    
-    refresh(state.current, state.size);                                   
+    refresh(state.current, state.size, state.name);                                   
     dealTableHeight();           //计算表格高度
     on(window, 'resize', dealTableHeight);
     return () => {
       off(window, 'resize', dealTableHeight);
     }                                           //eslint-disable-next-line
   },[])     
-  const refresh = (current, size) => {
+  const refresh = (current, size, name) => {
     dispatch({type: 'add_selection', payload: []})
     !state.loading && dispatch({type: "change_loading", payload: true})
     request({
@@ -34,7 +38,8 @@ export default memo(function AbnormalTracking() {
       method: 'get',
       params: {
         current: current,
-        size: size
+        size: size,
+        name: name
       }
     }).then(res => {
       const data = res.data ? res.data.records : []
@@ -48,12 +53,12 @@ export default memo(function AbnormalTracking() {
   }
   const pageChange = useCallback((page, pageSize) => {
     dispatch({type: 'change_page', payload: page})
-    !(page === state.current) && refresh(page, state.size);   //eslint-disable-next-line
+    !(page === state.current) && refresh(page, state.size, state.name);   //eslint-disable-next-line
   },[state])
   const paegSizeChange = useCallback((current, size) => {
     dispatch({type: 'change_page_size', payload: size})
     dispatch({type: 'change_page', payload: current})
-    refresh(state.current, size);                             //eslint-disable-next-line
+    refresh(state.current, size, state.name);                             //eslint-disable-next-line
   },[state])
   const onSelectChange = (selectedRowKeys) => {
     dispatch({type: 'add_selection', payload: selectedRowKeys})
@@ -73,19 +78,29 @@ export default memo(function AbnormalTracking() {
     if(state.selection.length <=0){
       message.warning('请选择删除项');
     }else{
-      request({
-        url: '/user/deleteByIds',
-        method: 'post',
-        data: {
-          ids: state.selection
-        }
-      }).then(res => {
-        if(res.code === 200){
-          refresh(state.current, state.size); 
-          message.success('操作成功')
-        }
+      Modal.confirm({
+        title: '警告',
+        icon: <ExclamationCircleOutlined />,
+        content: '确认删除选内容吗？',
+        okText: '确认',
+        cancelText: '取消',
+        onOk: deleteOk
       })
     }
+  }
+  const deleteOk = () => {
+    request({
+      url: '/user/deleteByIds',
+      method: 'post',
+      data: {
+        ids: state.selection
+      }
+    }).then(res => {
+      if(res.code === 200){
+        refresh(state.current, state.size, state.name); 
+        message.success('操作成功')
+      }
+    })
   }
   const flag = (flag) => {
     if(state.selection.length <=0){
@@ -100,24 +115,46 @@ export default memo(function AbnormalTracking() {
         }
       }).then(res => {
         if(res.code === 200){
-          refresh(state.current, state.size); 
+          refresh(state.current, state.size, state.name); 
           message.success('操作成功')
         }
       })
     }
   }
+  const add = () => {
+    dispatch({type: 'change_is_show', payload: true});
+  }
+  const close = (e) => {
+    if(e){      //说明添加成功
+      refresh(state.current, state.size, state.name);
+    }
+    dispatch({type: 'change_is_show', payload: false});
+  }
+  const search = (value) => {           //包含防抖
+    const timer = setTimeout(() => {
+      dispatch({type: 'change_name', payload: value.target.value});
+      refresh(state.current, state.size, value.target.value);
+    },600)
+    if(state.timer){
+      clearTimeout(state.timer)
+      dispatch({type: 'change_timer', payload: timer});
+    }else{
+      dispatch({type: 'change_timer', payload: timer});
+    }
+  }
   return (
     <AbnormalTrackingWrapper>
+      <AddComponent isShow={state.isShow} close={close}/>
       <Row justify="space-between" align="middle" style={{marginTop: '15px'}}>
         <Col>
-          <Button icon={<ReloadOutlined/>} onClick={e => refresh(state.current, state.size)}></Button>
+          <Button icon={<ReloadOutlined/>} onClick={e => refresh(state.current, state.size, state.name)}></Button>
         </Col>
         <Col>
-          <Button>新增</Button>
+          <Button onClick={e => add()}>新增</Button>
           <Button className="flag" onClick={e => flag(true)}>标记</Button>
           <Button className="delete_flag" onClick={e => flag(false)}>解除标记</Button>
           <Button className="delete" onClick={deleteRow}>删除</Button>
-          <Input className="search" placeholder="搜索..." suffix={<SearchOutlined />}/>
+          <Input className="search" placeholder="(姓名)搜索..." suffix={<SearchOutlined />} onChange={search}/>
         </Col>
       </Row>
       <Row style={{marginTop: '10px'}}>

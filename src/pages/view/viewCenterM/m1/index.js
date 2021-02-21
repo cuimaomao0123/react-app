@@ -4,7 +4,8 @@ import { M1Wrapper } from './style'
 const echarts = require('echarts');
 
 export default memo(function M1(props) {
-  const M1Ref = useRef()
+  const M1Ref = useRef();
+  const { chartData } = props;
   useEffect(() => {
     let myColor = ["#1089E7", "#1089E7", "#1089E7", "#1089E7", "#1089E7", "#DC143C", "#DC143C"];
     const myChart = echarts.init(M1Ref.current);
@@ -54,7 +55,7 @@ export default memo(function M1(props) {
         name: '总人数',
         type: 'bar',
         barWidth: "45%",
-        data: [200, 350, 521, 126, 150, 20, 5],
+        data: [chartData.interval1, chartData.interval2, chartData.interval3, chartData.interval4, chartData.interval5, chartData.interval6, chartData.interval7],
         itemStyle: {
           // 修改柱子圆角
           borderRadius : 3,
@@ -72,7 +73,7 @@ export default memo(function M1(props) {
     return () => {
       off(window, 'resize', resize)
     }
-  },[])
+  },[chartData])
 
   return (
     <M1Wrapper ref={M1Ref}></M1Wrapper>

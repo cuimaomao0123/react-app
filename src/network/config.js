@@ -1,4 +1,3 @@
-// const devBaseURL = "http://3c0900e549.qicp.vip/";
 const devBaseURL = "http://3c0900e549.qicp.vip/";
 // const devBaseURL = "http://114.55.53.71:8090/";
 

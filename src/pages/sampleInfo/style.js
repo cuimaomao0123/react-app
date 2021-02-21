@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const PersonalInfoWrapper = styled.div`
+export const SampleInfoWrapper = styled.div`
   padding: 10px 10px 0 10px;
   .search{
     margin-left: 5px;

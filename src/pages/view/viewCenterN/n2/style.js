@@ -14,10 +14,12 @@ export const N2Wrapper = styled.div`
     height: 0.5rem;
     min-height: 30px;
     width: 100%;
-    padding: 10px 0 0 15px;
+    padding: 10px 15px 0 15px;
     font-weight: bold;
     font-size: 14px;
     border-bottom: 1px solid #ebeef5;
+    display: flex;
+    justify-content: space-between;
   }
   .center{
     height: 100%;
