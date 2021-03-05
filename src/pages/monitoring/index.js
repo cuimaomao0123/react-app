@@ -53,8 +53,8 @@ export default memo(function Monitoring() {
     <MonitoringWrapper maxPosX={50} maxPosY={50} minPosX={100} minPosY={100}>
       <div className="tip">
         <span className="title">以下为热成像设备实时输出视频流内容，可能会存在延迟...</span>
-        <Button type="primary" onClick={connect} disabled={state.isConnect}>手动重连</Button>
-        <Button onClick={close} type="primary" danger style={{marginLeft: '5px'}} disabled={state.isConnect}>关闭连接</Button>
+        <Button className="closeC" type="primary" onClick={connect} disabled={state.isConnect}>手动重连</Button>
+        <Button onClick={close} type="primary" danger style={{marginLeft: '5px'}}>关闭连接</Button>
       </div>
       {
         state.isConnect ? 
