@@ -2,7 +2,7 @@ import React, { memo, useReducer, useRef, useEffect } from 'react'
 import { Modal, Row, Col, Form, Input, Radio, Select, message } from 'antd';
 import reducer from './reducer'
 import { getSelectList } from '@/services/abnormalImage'
-import { getList } from '@/services/abnormalTracking'
+import { save } from '@/services/abnormalTracking'
 import { AddComponentWrapper } from './style'
 import "./reset.css";
 
@@ -110,7 +110,7 @@ export default memo(function AddComponent(props) {
   }
   const handleOk = () => {
     formRef.current.validateFields().then(async(value) => {
-      const res = await getList({
+      const res = await save({
         name: state.name,
         age: state.age,
         sex: state.sex,
@@ -127,6 +127,9 @@ export default memo(function AddComponent(props) {
       if(res.code === 200){
         message.success('添加成功!')
         props.close(true);
+        formRef.current.resetFields();
+      }else{
+        message.error(res.msg)
       }
     }).catch(err => {
 

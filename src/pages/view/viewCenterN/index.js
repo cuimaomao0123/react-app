@@ -6,7 +6,7 @@ import N3 from './n3'
 import N4 from './n4'
 import { getList} from '@/services/abnormalImage'
 
-export default memo(function ViewCnterN() {
+export default memo(function ViewCnterN(props) {
   const [list, setlist] = useState([])
   useEffect(() => {
     refresh();
@@ -21,7 +21,6 @@ export default memo(function ViewCnterN() {
       size: 10,
       siteId: ""
     })
-    console.log(res);
     if(res.code === 200){
       let list = [...res.data.records];
       setlist(list)
@@ -31,7 +30,7 @@ export default memo(function ViewCnterN() {
     <ViewCenterNWrapper>
       <N1 list={list}></N1>
       <N2 list={list}></N2>
-      <N3></N3>
+      <N3 {...props}></N3>
       <N4></N4>
     </ViewCenterNWrapper>
   )

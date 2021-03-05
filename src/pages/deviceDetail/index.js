@@ -6,20 +6,40 @@ import { getList, deleteById, search } from '@/services/deviceDetail'
 import reducer from './reducer'
 import { columns1 } from './tableData'
 import { DeviceDetailWrapper } from './style'
+import EditComponent from './editComponent'
 export default memo(function DeviceDetail() {
   const [state, dispatch] = useReducer(reducer, {
     pageNum: 1,
     size: 10,
     total: 0,
     list: [],
-    columns: columns1,
+    columns: [],
     selectionKey: [],
-    loading: true,
-    timer: null
+    loading: false,
+    timer: null,
+    isShow: false,
+    editObj: {}
   })
   useEffect(() => {
+    dealColumns(columns1)
     refresh(1,10);                           //eslint-disable-next-line
   },[])
+
+  const dealColumns = (columns) => {
+    const column = [...columns];
+    column.forEach(item => {
+      if(item['key'] === 'operate'){
+        item['render'] = (data, text) => {
+          return <a style={{fontWeight: 'bold'}} onClick={e => operate(text)}>操作</a>
+        }
+      }
+    })
+    dispatch({type: 'change_columns', payload: column});
+  }
+  const operate = (text) => {
+    dispatch({type: 'change_is_show', payload: true});
+    dispatch({type: 'change_edit_obj', payload: text});
+  }
   const refresh = async (pageNum, size) => {
     dispatch({type: 'change_loading', payload: true});
     const res = await getList({
@@ -68,13 +88,19 @@ export default memo(function DeviceDetail() {
     if(res.code === 200){
       refresh(state.pageNum, state.size); 
       message.success('删除成功')
+    }else{
+      message.error(res.msg)
     }
   }
   const searchName = async (e) => {
     const res = await search({
       name: e.target.value
     });
-    dispatch({type: 'change_list', payload: res.data});
+    const data = res.data;
+    data.forEach((item, index) => {
+      item['index'] = index + 1;
+    })
+    dispatch({type: 'change_list', payload: data});
   }
   const searchInput = (e) => {
     const timer = setTimeout(() => {
@@ -92,14 +118,22 @@ export default memo(function DeviceDetail() {
     columnWidth: '60px',
     onChange: onSelectChange,
   };
+  const close = (e) => {
+    if(e){
+      dispatch({type: 'change_is_show', payload: false});
+      refresh(state.pageNum, state.size);
+    }
+    dispatch({type: 'change_is_show', payload: false});
+  }
   return (
     <DeviceDetailWrapper>
+      <EditComponent isShow={state.isShow} close={close} editObj={state.editObj}/>
       <Row justify="space-between" align="middle" style={{marginTop: '15px'}}>
         <Col>
           <Button icon={<ReloadOutlined/>} onClick={e => refresh(state.pageNum, state.size)}></Button>
         </Col>
         <Col>
-          <Button style={{marginLeft: '5px'}} onClick={deleteWithId}>删除</Button>
+          <Button style={{marginLeft: '5px'}} type="primary" danger onClick={deleteWithId}>删除</Button>
           <Input style={{width: '170px', marginLeft: '5px'}} placeholder="(设备名)搜索..." onChange={searchInput} suffix={<SearchOutlined />}/>
         </Col>
       </Row>

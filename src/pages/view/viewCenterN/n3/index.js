@@ -3,7 +3,8 @@ import { on, off } from '@/utils'
 import { N3Wrapper } from './style'
 const echarts = require('echarts');
 
-export default memo(function N3() {
+export default memo(function N3(props) {
+  const { chartData } = props; 
   const N3Ref = useRef()
   useEffect(() => {
     const myChart = echarts.init(N3Ref.current);
@@ -23,9 +24,9 @@ export default memo(function N3() {
       },
       legend: {
         orient: 'vertical',
-        left: '1%',
+        left: '2%',
         top: '3%',
-        data: ['6:00-8:00', '8:00-10:00', '10:00-12:00', '12:00-14:00', '14:00-16:00', '16:00-18:00', '18:00-20:00', '20:00-22:00'],
+        data: ['0:00-4:00', '4:00-8:00', '8:00-12:00', '12:00-16:00', '16:00-20:00', '20:00-24:00'],
         textStyle: {
           fontSize: 12
         }
@@ -46,14 +47,12 @@ export default memo(function N3() {
             radius: '50%',
             center: ['60%', '60%'],
             data: [
-                {value: 335, name: '6:00-8:00'},
-                {value: 310, name: '8:00-10:00'},
-                {value: 234, name: '10:00-12:00'},
-                {value: 135, name: '12:00-14:00'},
-                {value: 1548, name: '14:00-16:00'},
-                {value: 158, name: '16:00-18:00'},
-                {value: 1048, name: '18:00-20:00'},
-                {value: 748, name: '20:00-22:00'}
+                {value: chartData.time1, name: '0:00-4:00'},
+                {value: chartData.time2, name: '4:00-8:00'},
+                {value: chartData.time3, name: '8:00-12:00'},
+                {value: chartData.time4, name: '12:00-16:00'},
+                {value: chartData.time5, name: '16:00-20:00'},
+                {value: chartData.time6, name: '20:00-24:00'}
             ],
             emphasis: {
               itemStyle: {
@@ -70,6 +69,7 @@ export default memo(function N3() {
       ]
   };
     myChart.setOption(option);
+    myChart.resize()
     const resize = () => {
       myChart.resize()
     }
@@ -77,7 +77,7 @@ export default memo(function N3() {
     return () => {
       off(window, 'resize', resize)
     }
-  },[])
+  },[chartData])
 
   return (
     <N3Wrapper ref={N3Ref}></N3Wrapper>

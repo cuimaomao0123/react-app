@@ -1,7 +1,8 @@
 import React, { memo, useState, useEffect, useRef } from 'react'
 import { VariableSizeGrid as Grid } from 'react-window';
 import ResizeObserver from 'rc-resize-observer';
-import { Table, Checkbox } from 'antd';
+import { Table, Checkbox, Image } from 'antd';
+
 import { VirtualTableWrapper } from './style'
 /*
   该组件为自己独立封装的虚拟滚动的表格组件，参考antdesign的Table虚拟部分，以及react-window库的使用
@@ -79,18 +80,7 @@ export default memo(function VirtualTable(props) {
         }}
       >
         {({ columnIndex, rowIndex, style }) => {                              //主体内容
-          if(mergedColumns[columnIndex].dataIndex !== 'selection'){           //常规元素
-            return (
-              <div className={['virtual-table-cell', 
-                                gridCellClassName ? gridCellClassName :"", 
-                                columnIndex === mergedColumns.length - 1 ? 'virtual-table-cell-last' : "",
-                                rawData[rowIndex]['isSelect'] ? 'selectClass':""
-                              ].filter(item => item !== "").join(" ").trim()} 
-                                style={style}>
-                {rawData[rowIndex][mergedColumns[columnIndex].dataIndex]}
-              </div>
-            );
-          }else{                                                              //复选框
+          if(mergedColumns[columnIndex].dataIndex === 'selection'){           //复选框
             return (
               <div className={['virtual-table-cell', 
                                 gridCellClassName ? gridCellClassName :"", 
@@ -99,6 +89,30 @@ export default memo(function VirtualTable(props) {
                               ].filter(item => item !== "").join(" ").trim()} 
                                 style={style}>
                 <Checkbox checked={rawData[rowIndex]['isSelect']} onChange={e => onSelectChange(rawData[rowIndex])}/>
+              </div>
+            );
+          }else if(mergedColumns[columnIndex].dataIndex === 'pictureUrl'){    //图片
+            // return ;
+            
+            return (
+              <div className={['virtual-table-cell', 
+                            gridCellClassName ? gridCellClassName :"", 
+                            columnIndex === mergedColumns.length - 1 ? 'virtual-table-cell-last' : "",
+                            rawData[rowIndex]['isSelect'] ? 'selectClass':""
+                          ].filter(item => item !== "").join(" ").trim()} 
+                            style={style}>
+                <Image src={rawData[rowIndex]['pictureUrl']} width={35}/>
+              </div>
+            );
+          }else{                                                              //常规
+            return (
+              <div className={['virtual-table-cell', 
+                                gridCellClassName ? gridCellClassName :"", 
+                                columnIndex === mergedColumns.length - 1 ? 'virtual-table-cell-last' : "",
+                                rawData[rowIndex]['isSelect'] ? 'selectClass':""
+                              ].filter(item => item !== "").join(" ").trim()} 
+                                style={style}>
+                {rawData[rowIndex][mergedColumns[columnIndex].dataIndex]}
               </div>
             );
           }

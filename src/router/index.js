@@ -20,7 +20,9 @@ import SampleInfo from '@/pages/sampleInfo'
 import AbnormalTracking from '@/pages/abnormalTracking'
 import DeviceDetail from '@/pages/deviceDetail'
 import Monitoring from '@/pages/monitoring'
-import SystemControl from '@/pages/systemControl'
+import UserControl from '@/pages/userControl'
+import ParamsControl from '@/pages/paramsControl'
+import SitesControl from '@/pages/sitesControl'
 
 
 export const loginRoutes = [        //不需要权限的路由
@@ -155,13 +157,23 @@ export const routes = [           //需要权限的路由(登录进入主页面�
         path: "/systemControl",
         exact: true,
         render: () => (
-          <Redirect to="/systemControl/systemControl"/>
+          <Redirect to="/systemControl/userControl"/>
         )
       },
       {
-        path: "/systemControl/systemControl",
-        title: "系统管理",
-        component: SystemControl
+        path: "/systemControl/userControl",
+        title: "用户管理",
+        component: UserControl
+      },
+      {
+        path: "/systemControl/paramsControl",
+        title: "参数管理",
+        component: ParamsControl
+      },
+      {
+        path: "/systemControl/sitesControl",
+        title: "地点管理",
+        component: SitesControl
       },
       {
         render: () => (

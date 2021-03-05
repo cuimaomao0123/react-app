@@ -14,6 +14,12 @@ export default function reducer(state, action) {
       return {...state, loading: action.payload};
     case "change_timer":
       return {...state, timer: action.payload};
+    case "change_columns":
+      return {...state, columns: action.payload};
+    case "change_is_show":
+      return {...state, isShow: action.payload};
+    case "change_edit_obj":
+      return {...state, editObj: action.payload};
     default:
       return state;
   }

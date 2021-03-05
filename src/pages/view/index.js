@@ -8,7 +8,7 @@ import { getChartData } from '@/services/view'
 export default memo(function View(props) {
   const [chartData, setchartData] = useState({})
   useEffect(() => {
-    getData(4);
+    getData(1);
   }, [])
   const changeTime = (time) => {
     getData(time);

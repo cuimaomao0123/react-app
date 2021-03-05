@@ -1,13 +1,37 @@
-import React, { memo } from 'react'
+import React, { memo, useEffect, useReducer } from 'react'
 import { Select, Image } from 'antd';
 import { MehOutlined } from '@ant-design/icons';
+import { getSelectList, getFacility } from '@/services/n4'
 import { N4Wrapper } from './style'
+import reducer from './reducer'
 const { Option } = Select;
 
 export default memo(function N4() {
+  useEffect(() => {
+    getSelect();
+    getFacilityData(1);
+  }, [])
+  const [state, dispatch] = useReducer(reducer, {
+    selectArray: [],
+    facility: {}
+  })
+  const getSelect = async() => {
+    const res = await getSelectList();
+    if(res.code === 200){
+      dispatch({type: 'change_select_array', payload: res.data});
+    }
+  }
+  const getFacilityData = async(id) => {
+    const res = await getFacility({
+      facilityId: id
+    });
+    if(res.code === 200){
+      dispatch({type: 'change_facility', payload: res.data});
+    }
+  }
   const img = "https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1585758487,2031490270&fm=26&gp=0.jpg";
   const handleChange = (value) => {
-    console.log(`selected ${value}`);
+    getFacilityData(value);
   }
   return (
     <N4Wrapper>
@@ -17,18 +41,24 @@ export default memo(function N4() {
       <div className="device_change">
         <p>设备切换</p>
         <Select className="select" 
-                defaultValue="jack" 
+                defaultValue="1" 
                 size="small" 
                 onChange={handleChange}>
-          <Option value="jack">SADJaJAS2</Option>
-          <Option value="lucy">JJNnhads5</Option>
+          {
+            state.selectArray.map(item => {
+              return <Option key={item.id} value={item.id}>{item.value}</Option>;
+            })
+          }
         </Select>
       </div>
       <div className="device_detail">
         <div className="device_desc">
-          <p>当前设备编号：SADJaJAS2</p>
-          <p>设备工作地：某地</p>
-          <p>设备工作时长：20h</p>
+          <p>当前设备编号：{state.facility.name}</p>
+          <p>设备工作地：{state.facility.site}</p>
+          <p>设备发射率：{state.facility.emissivity}</p>
+          <p>设备融合比：{state.facility.fusionThan}</p>
+          <p>设备心跳设置：{state.facility.heartbeat}</p>
+          <p>热像仪模块Ip：{state.facility.moduleIp}</p>
         </div>
         <div className="device_img">
         <Image className="zmage" 

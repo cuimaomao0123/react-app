@@ -6,8 +6,6 @@ export default function reducer(state, action) {
       return {...state, url: action.payload};
     case "change_spin":
       return {...state, spin: action.payload};
-    case "change_click":
-      return {...state, isClick: action.payload};
     default:
       return state;
   }

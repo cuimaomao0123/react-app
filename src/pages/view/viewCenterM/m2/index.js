@@ -60,6 +60,7 @@ export default memo(function M2(props) {
       ]
   };
     myChart.setOption(option);
+    myChart.resize()
     const resize = () => {
       myChart.resize()
     }

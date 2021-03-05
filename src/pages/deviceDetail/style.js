@@ -9,5 +9,12 @@ export const DeviceDetailWrapper = styled.div`
       background: #ffffff;
     }
   }
-  
+  .ant-table-thead > tr > th, .ant-table-tbody > tr > td, .ant-table tfoot > tr > th, .ant-table tfoot > tr > td{
+    color: #515a6e;
+    padding: 8px 2px;
+    font-size: 13px;
+  }
+  .ant-table-thead > tr > th{
+    background-color: #ffffff;
+  }
 `

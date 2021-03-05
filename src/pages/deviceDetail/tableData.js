@@ -56,5 +56,13 @@ export const columns1 = [
     ellipsis: true,
     align: 'center'
   },
+  {
+    title: '操作',
+    dataIndex: 'operate',
+    key: 'operate',
+    textWrap: 'word-break',
+    ellipsis: true,
+    align: 'center'
+  }
 ];
 

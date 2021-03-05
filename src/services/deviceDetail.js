@@ -21,3 +21,10 @@ export const search = (config) => {
     data: config
   });
 }
+export const edit = (config) => {
+  return request({
+    url: '/facility',
+    method: 'PUT',
+    data: config
+  });
+}

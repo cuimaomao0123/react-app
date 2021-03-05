@@ -7,3 +7,11 @@ export const getList = (config) => {
     params: config
   });
 }
+export const deleteSample = (config) => {
+  console.log(config);
+  return request({
+    url: '/sample/delete-by-ids',
+    method: 'post',
+    data: config
+  });
+}

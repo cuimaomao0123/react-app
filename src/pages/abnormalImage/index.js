@@ -113,6 +113,8 @@ export default memo(function AbnormalImage() {
     if(res.code === 200){
       message.success('删除成功!');
       refresh(1, 20, "")
+    }else{
+      message.error(res.msg)
     }
   }
   return (
@@ -122,8 +124,8 @@ export default memo(function AbnormalImage() {
           <Button icon={<ReloadOutlined/>} onClick={e => refresh(state.pageNum, state.size, state.siteId)}></Button>
         </Col>
         <Col>
-          <Button onClick={deleteById}>删除</Button>
-          <Select placeholder="按地点查询..." style={{ marginLeft: '5px' }} onChange={handleChange}>
+          <Button type="primary" danger onClick={deleteById}>删除</Button>
+          <Select placeholder="按地点查询..." style={{ marginLeft: '5px', width: '160px'}} onChange={handleChange}>
             {
               state.selectList.map(item => {
                 return <Option key={item.id} value={item.value}>{item.value}</Option>;

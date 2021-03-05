@@ -1,11 +1,13 @@
 import React, { memo, useReducer, useEffect, useCallback } from 'react'
 import { Row, Col, Button, Input, Table, message, Modal } from 'antd';
 import AddComponent from './addComponent'
-import { ReloadOutlined, SearchOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
+import EditComponent from './editComponent'
+import { ReloadOutlined, SearchOutlined, ExclamationCircleOutlined, VerticalAlignBottomOutlined } from '@ant-design/icons';
 import Page from '@/components/pagination'
 import { on, off } from '@/utils'
 import request from '@/network/request'
 import reducer from './reducer'
+import { BASE_URL } from '@/network/config'
 import { column1 } from './tableData'
 import { AbnormalTrackingWrapper } from './style'
 
@@ -20,7 +22,9 @@ export default memo(function AbnormalTracking() {
     loading: true,
     selection: [],
     isShow: false,
-    timer: null
+    timer: null,
+    editShow: false,
+    editObj: {}
   })
   useEffect(() => {    
     refresh(state.current, state.size, state.name);                                   
@@ -142,18 +146,46 @@ export default memo(function AbnormalTracking() {
       dispatch({type: 'change_timer', payload: timer});
     }
   }
+  const exportExcel = () => {
+    window.location.href = `${BASE_URL}user/export`;
+    setTimeout(() => {
+      message.success('导出成功')
+    }, 1000);
+  }
+  const edit = () => {
+    if(state.selection.length <=0){
+      message.warning('请选择编辑项!');
+    }else if(state.selection.length >=2){
+      message.warning('抱歉，一次只可以编辑一条数据哦!');
+    }else{
+      const editObj = state.data.find(item => {
+        return item.id === state.selection[0];
+      })
+      dispatch({type: 'change_edit_obj', payload: editObj});
+      dispatch({type: 'change_edit_show', payload: true});
+    }
+  }
+  const editClose = (e) => {
+    if(e){      //说明编辑成功
+      refresh(state.current, state.size, state.name);
+    }
+    dispatch({type: 'change_edit_show', payload: false});
+  }
   return (
     <AbnormalTrackingWrapper>
       <AddComponent isShow={state.isShow} close={close}/>
+      <EditComponent isShow={state.editShow} close={editClose} editObj={state.editObj}/>
       <Row justify="space-between" align="middle" style={{marginTop: '15px'}}>
         <Col>
           <Button icon={<ReloadOutlined/>} onClick={e => refresh(state.current, state.size, state.name)}></Button>
         </Col>
         <Col>
-          <Button onClick={e => add()}>新增</Button>
-          <Button className="flag" onClick={e => flag(true)}>标记</Button>
+          <Button type="primary" onClick={e => add()}>新增</Button>
+          <Button type="primary" style={{marginLeft: '5px'}} onClick={e => edit()}>编辑</Button>
+          <Button type="primary" danger className="delete" onClick={deleteRow}>删除</Button>
+          <Button type="primary" icon={<VerticalAlignBottomOutlined/>} className="delete" onClick={exportExcel}>导出</Button>
+          <Button style={{backgroundColor: 'rgba(252,161,48,.1)'}} className="flag" onClick={e => flag(true)}>标记</Button>
           <Button className="delete_flag" onClick={e => flag(false)}>解除标记</Button>
-          <Button className="delete" onClick={deleteRow}>删除</Button>
           <Input className="search" placeholder="(姓名)搜索..." suffix={<SearchOutlined />} onChange={search}/>
         </Col>
       </Row>

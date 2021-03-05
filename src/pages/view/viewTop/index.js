@@ -28,20 +28,20 @@ export default memo(function ViewTop(props) {
           <Col span={5}>
           <div className="top_item num_total">
             <i className="iconfont icon-renqun-copy"></i>
-            <span className="num_total_item1">23153</span>
+            <span className="num_total_item1">{props.chartData.sampleSum}</span>
             <span className="num_total_item2">人</span>
             <div className="num_total_item3">
-              <p> 今日共采集样本总数<span>23153</span>人</p>
+              <p>共采集样本总数<span>{props.chartData.sampleSum}</span>人</p>
             </div>
           </div>
           </Col>
           <Col span={5}>
           <div className="top_item time_total">
             <i className="iconfont icon-shijian"></i>
-            <span className="time_total_item1">135</span>
-            <span className="time_total_item2">h</span>
+            <span className="time_total_item1">{props.chartData.ycAverage === null? 0 : props.chartData.ycAverage}</span>
+            <span className="time_total_item2">℃</span>
             <div className="time_total_item3">
-              <p> 今日设备运营总时长<span>135</span>h</p>
+              <p>异常人员平均温度<span>{props.chartData.ycAverage === null? 0 : props.chartData.ycAverage}</span>℃</p>
             </div>
           </div>
           </Col>

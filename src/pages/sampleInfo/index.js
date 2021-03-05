@@ -1,27 +1,26 @@
 import React, { memo, useEffect, useState, useCallback, useReducer } from 'react'
-import { Row, Col, Button, Input, Checkbox } from 'antd';
-import { ReloadOutlined, SearchOutlined, VerticalAlignBottomOutlined } from '@ant-design/icons';
+import { Row, Col, Button, Checkbox, message, Modal } from 'antd';
+import { ReloadOutlined, VerticalAlignBottomOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import VirtualTable from './components/virtualTable'
-import Page from '@/components/pagination'
-import { getList } from '@/services/sampleInfo'
+import { getList, deleteSample } from '@/services/sampleInfo'
 import { on, off } from '@/utils'
+import { BASE_URL } from '@/network/config'
 import { SampleInfoWrapper } from './style'
 import{ column1 } from './tableData'  
 import reducer from './reducer'
+
 export default memo(function SampleInfo() {
 
   const [list, setlist] = useState([]);
   const [column, setcolumn] = useState(column1);
   const [y, sety] = useState(650);
   const [state, dispatch] = useReducer(reducer, {
-    total: 30,
-    limitPage: 1,
-    limitCount: 10,
     indeterminate: false,
     isSelectAll: false,
-    size: 30,
+    size: 1000,
     current: 1,
-    siteId: ""
+    siteId: "",
+    selectedArray: []
   });
   useEffect(() => {
     sety(document.body.offsetHeight - 270);
@@ -39,7 +38,8 @@ export default memo(function SampleInfo() {
       }
     })
     setcolumn(column);  //eslint-disable-next-line
-  },[state])     
+  },[list, state])    
+
   const refresh = async(current, size, siteId) => {
     const res = await getList({
       current,
@@ -48,6 +48,8 @@ export default memo(function SampleInfo() {
     });
     if(res.code === 200){
       const list = dealList(res.data.records);
+      dispatch({type: 'change_is_select_all', payload: false})
+      dispatch({type: 'change_indeterminate', payload: false})
       setlist(list);                                  
     }
   }
@@ -65,23 +67,30 @@ export default memo(function SampleInfo() {
     if(data.every(item => item.isSelect === true)){                       //全部选中，取消
       dispatch({type: 'change_is_select_all', payload: false})    
       data.forEach(item => item.isSelect = false);
+      dispatch({type: 'change_selected_array', payload: []})
     }else if(data.some(item => item.isSelect === true)){                  //部分选中，全选
       dispatch({type: 'change_is_select_all', payload: true})
-      data.forEach(item => item.isSelect = true);
+      let selectedArray = [];
+      data.forEach(item => {
+        item.isSelect = true;
+        selectedArray.push(item.id)
+      })
+      dispatch({type: 'change_selected_array', payload: selectedArray})
     }else{                                                                //都没选中，全选
       dispatch({type: 'change_is_select_all', payload: true})
-      data.forEach(item => item.isSelect = true);
+      let selectedArray = [];
+      data.forEach(item => {
+        item.isSelect = true;
+        selectedArray.push(item.id)
+      })
+      dispatch({type: 'change_selected_array', payload: selectedArray})
     }
     dispatch({type: 'change_indeterminate', payload: false})
     setlist(data);
+    
   },[list])
-  const paegChange = useCallback((page, pageSize) => {
-    dispatch({type: 'change_page', payload: page})
-  },[])
-  const paegSizeChange = useCallback((current, size) => {
-    dispatch({type: 'change_page_size', payload: size})
-  },[])
   const onSelectChange = (rowData) => {
+    dealSelect(rowData.id);
     const tableData = [...list];
     tableData.forEach(item => {
       if(item.id === rowData.id){
@@ -102,21 +111,64 @@ export default memo(function SampleInfo() {
       dispatch({type: 'change_is_select_all', payload: false})
     }
     setlist(tableData)
-    // console.log('selectedRowKeys changed: ', rowData);
   };
+  const dealSelect = (id) => {
+    const selectedArray = [...state.selectedArray];
+    const index = selectedArray.findIndex(item => {
+      return item === id;
+    })
+    if(index === -1){        //没找到则添加
+      selectedArray.push(id)
+      dispatch({type: 'change_selected_array', payload: selectedArray})
+    }else{
+      selectedArray.splice(index, 1)
+      dispatch({type: 'change_selected_array', payload: selectedArray})
+    }
+  }
   const dealTableHeight = () => {
     sety(document.body.offsetHeight - 270);
   }
+  const downLoad = () => {
+    window.location.href = `${BASE_URL}sample/export`;
+  }
+  const iconRefresh = () => {
+    refresh(state.current, state.size, state.siteId);
+  }
+  const deleteSampleInfo = () => {
+    if(state.selectedArray.length <=0){
+      message.warning('请选择删除项')
+    }else{
+      Modal.confirm({
+        title: '警告',
+        icon: <ExclamationCircleOutlined />,
+        content: '确认删除选内容吗？',
+        okText: '确认',
+        cancelText: '取消',
+        onOk: deleteOk
+      })
+    }
+  }
+  const deleteOk = async() => {
+    const res = await deleteSample({
+      ids: state.selectedArray
+    });
+    if(res.code === 200){
+      message.success('删除成功')
+      refresh(state.current, state.size, state.siteId);
+    }else{
+      message.error(res.msg)
+    }
+  }
+
   return (
     <SampleInfoWrapper>
       <Row justify="space-between" align="middle">
         <Col>
-          <Button icon={<ReloadOutlined/>}></Button>
+          <Button onClick={iconRefresh} icon={<ReloadOutlined/>}></Button>
         </Col>
         <Col>
-          <Button icon={<VerticalAlignBottomOutlined style={{fontSize: '16px'}}/>}>下载表格数据</Button>
-          <Button>删除</Button>
-          <Input className="search" placeholder="搜索..." suffix={<SearchOutlined />}/>
+          <Button type="primary" onClick={downLoad} icon={<VerticalAlignBottomOutlined style={{fontSize: '16px'}}/>}>数据导出</Button>
+          <Button type="primary" danger style={{marginLeft: '5px'}} onClick={deleteSampleInfo}>删除</Button>
         </Col>
       </Row>
       <VirtualTable dataSource={list}
@@ -126,7 +178,7 @@ export default memo(function SampleInfo() {
                     tableClassName="table"
                     onSelectChange={onSelectChange}
       />
-      <Page {...{total: state.total, limitPage: state.limitPage, limitCount: state.limitCount, onChange: paegChange, onShowSizeChange: paegSizeChange}}></Page>
+      <p style={{marginTop:'10px', fontSize: '15px'}}>*该表格为虚拟滚动表格，直接展示全部数据，无需分页</p>
     </SampleInfoWrapper>
   )
 })

@@ -66,6 +66,7 @@ export default memo(function M1(props) {
       }]
     };
     myChart.setOption(option);
+    myChart.resize()
     const resize = () => {
       myChart.resize()
     }
