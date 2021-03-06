@@ -39,22 +39,22 @@ export default memo(function Monitoring() {
       dispatch({type: 'open_connect', payload: false});
     }
   }
-  const close = () => {
-    const { ws, isConnect } = state;
-    if(isConnect){
-      ws.close();
-      dispatch({type: 'open_connect', payload: false});
-      message.warning('Socket连接已关闭！')
-    }else{
-      message.warning('当前Socket正处于未连接状态，无需关闭连接！')
-    }
-  }
+  // const close = () => {
+  //   const { ws, isConnect } = state;
+  //   if(isConnect){
+  //     ws.close();
+  //     dispatch({type: 'open_connect', payload: false});
+  //     message.warning('Socket连接已关闭！')
+  //   }else{
+  //     message.warning('当前Socket正处于未连接状态，无需关闭连接！')
+  //   }
+  // }
   return (
     <MonitoringWrapper maxPosX={50} maxPosY={50} minPosX={100} minPosY={100}>
       <div className="tip">
         <span className="title">以下为热成像设备实时输出视频流内容，可能会存在延迟...</span>
         <Button className="closeC" type="primary" onClick={connect} disabled={state.isConnect}>手动重连</Button>
-        <Button onClick={close} type="primary" danger style={{marginLeft: '5px'}}>关闭连接</Button>
+        {/* <Button onClick={close} type="primary" danger style={{marginLeft: '5px'}}>关闭连接</Button> */}
       </div>
       {
         state.isConnect ? 
