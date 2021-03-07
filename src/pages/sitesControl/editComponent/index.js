@@ -13,7 +13,7 @@ export default memo(function AddComponent(props) {
         latitude: editObj.latitude
       })
     }
-  }, [props])
+  }, [editObj])
   const formRef = useRef()
   const layout1 = {
     labelCol: {

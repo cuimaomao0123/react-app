@@ -10,7 +10,7 @@ export default memo(function EditComponent(props) {
   const { editObj } = props;
   useEffect(() => {
     getSelectedList();
-  }, [])
+  }, [])  
   useEffect(() => {
     if(formRef.current){
       formRef.current.setFieldsValue({
@@ -28,7 +28,7 @@ export default memo(function EditComponent(props) {
         siteId: editObj.site    //需要特殊设置
       })
     }
-  }, [props])
+  }, [editObj])
   const formRef = useRef()
   const [state, dispatch] = useReducer(reducer, {
     sex: "",

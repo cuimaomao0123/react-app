@@ -2,6 +2,7 @@ import { Button, message, Spin } from 'antd'
 import React, { memo, useEffect, useReducer } from 'react'
 import reducer from './reducer'
 import { socketUrl } from '@/network/config'
+import { openDevice } from '@/services/monitoring'
 import './reset.css'
 import { MonitoringWrapper } from './style'
 
@@ -10,33 +11,43 @@ export default memo(function Monitoring() {
     url: "",
     isConnect: false,
     spin: true,
-    ws: new WebSocket(socketUrl)
+    ws: null
   })
-  useEffect(() => {               
-    connect();
+  useEffect(() => {       
+    const ws = new WebSocket(socketUrl);   
+    dispatch({type: 'change_ws', payload: ws});
     return () => {
-      state.ws.close();           //组件销毁，关闭连接
+      state.ws.close();                 //组件销毁，关闭连接
     }                                   //eslint-disable-next-line
   },[])
-
+  useEffect(() => {
+    connect();
+  },[state.ws])
   const connect = () => {
     const ws = state.ws
-    dispatch({type: 'change_spin', payload: true});
-    ws.onopen = () => {
-      console.log("socket已连接")
-      dispatch({type: 'open_connect', payload: true});
-      dispatch({type: 'change_spin', payload: false});
-    }
-    ws.onmessage = (msg) => {
-      let url = msg.data;
-      dispatch({type: 'get_url', payload: url});
-      if(state.span){
+    if(ws !== null){
+      openDevice();
+      dispatch({type: 'change_spin', payload: true});
+      ws.onopen = () => {
+        console.log("socket已连接")
+        dispatch({type: 'open_connect', payload: true});
         dispatch({type: 'change_spin', payload: false});
       }
-    }
-    ws.onclose = () => {
-      console.log('服务端主动关闭')
-      dispatch({type: 'open_connect', payload: false});
+      ws.onmessage = (msg) => {
+        const data = JSON.parse(msg.data)
+        let url = data.base64;
+        dispatch({type: 'get_url', payload: url});
+        if(state.span){
+          dispatch({type: 'change_spin', payload: false});
+        }
+      }
+      ws.onerror = () => {
+        console.log('socket进入error')
+      }
+      ws.onclose = () => {
+        console.log('socket连接关闭')
+        dispatch({type: 'open_connect', payload: false});
+      }
     }
   }
   // const close = () => {

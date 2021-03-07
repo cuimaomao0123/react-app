@@ -6,22 +6,22 @@ export const pad = (num, n) => {
   }
   return num;
 }
-Date.prototype.FormatDate = function (fmt) {  
-  var o = {
-      "M+": this.getMonth() + 1, //月份 
-      "d+": this.getDate(), //日 
-      "h+": this.getHours(), //小时 
-      "m+": this.getMinutes(), //分 
-      "s+": this.getSeconds(), //秒 
-      "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
-      "S": this.getMilliseconds() //毫秒 c
-  };
-  if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-  for (var k in o)
-  if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-  return fmt;
-  //调用示例：   new Date(时间戳).FormatDate('yyyy-MM-dd hh:mm:ss')  除了月份M大写其余全部小写
-}
+// Date.prototype.FormatDate = function (fmt) {        //eslint-disable-next-line   
+//   var o = {                                         
+//       "M+": this.getMonth() + 1, //月份 
+//       "d+": this.getDate(), //日 
+//       "h+": this.getHours(), //小时 
+//       "m+": this.getMinutes(), //分 
+//       "s+": this.getSeconds(), //秒 
+//       "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+//       "S": this.getMilliseconds() //毫秒 c
+//   };                                                              
+//   if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+//   for (var k in o)
+//   if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+//   return fmt;
+//   //调用示例：   new Date(时间戳).FormatDate('yyyy-MM-dd hh:mm:ss')  除了月份M大写其余全部小写
+// }
 
 export const getShortDate = timestamp => {
     var date = new Date(timestamp*1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
@@ -46,17 +46,14 @@ export const getLocalDate = date => {
   var D = d.getDate();
   var h = d.getHours();
   var m = d.getMinutes();
-  var s = d.getSeconds();
   return pad(Y, 4) + '-' + pad(M, 2) + '-' + pad(D, 2) + ' ' + pad(h, 2) + ':' + pad(m, 2);
 }
 export const getNoYearDate = date => {
   var d = new Date(date * 1000);
-  var Y = d.getFullYear();
   var M = d.getMonth() + 1;
   var D = d.getDate();
   var h = d.getHours();
   var m = d.getMinutes();
-  var s = d.getSeconds();
   return pad(M, 2) + '-' + pad(D, 2) + ' ' + pad(h, 2) + ':' + pad(m, 2);
 }
 
@@ -65,20 +62,13 @@ export const getFormatDate = date => {
     var Y = d.getFullYear();
     var M = d.getMonth() + 1;
     var D = d.getDate();
-    var h = d.getHours();
-    var m = d.getMinutes();
-    var s = d.getSeconds();
     return pad(Y, 4) + '-' + pad(M, 2) + '-' + pad(D, 2);
 }
 
 export const getMonthAndDayDate = date =>{
     var d = new Date(date * 1000);
-    var Y = d.getFullYear();
     var M = d.getMonth() + 1;
     var D = d.getDate();
-    var h = d.getHours();
-    var m = d.getMinutes();
-    var s = d.getSeconds();
     return pad(M, 2) + '-' + pad(D, 2);
 }
 

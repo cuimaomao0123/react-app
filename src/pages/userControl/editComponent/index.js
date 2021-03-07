@@ -14,7 +14,7 @@ export default memo(function EditComponent(props) {
         username: editObj.username
       })
     }
-  }, [props])
+  }, [editObj])
   const layout1 = {
     labelCol: {
       span: 4,

@@ -15,7 +15,7 @@ export default memo(function AddComponent(props) {
         serverPort: editObj.serverPort
       })
     }
-  }, [props])
+  }, [editObj])
   const formRef = useRef()
   const layout1 = {
     labelCol: {
