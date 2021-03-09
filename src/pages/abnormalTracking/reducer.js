@@ -24,6 +24,10 @@ export default function reducer(state, action) {
       return {...state, editShow: action.payload};
     case "change_edit_obj":
       return {...state, editObj: action.payload};
+    case "change_start_time":
+      return {...state, startTime: action.payload};
+    case "change_end_time":
+      return {...state, endTime: action.payload};
     default:
       return state;
   }

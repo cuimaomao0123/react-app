@@ -1,5 +1,5 @@
 import React, { memo, useReducer, useEffect, useCallback } from 'react'
-import { Row, Col, Button, Input, Table, message, Modal } from 'antd';
+import { Row, Col, Button, Input, Table, message, Modal, DatePicker } from 'antd';
 import AddComponent from './addComponent'
 import EditComponent from './editComponent'
 import { ReloadOutlined, SearchOutlined, ExclamationCircleOutlined, VerticalAlignBottomOutlined } from '@ant-design/icons';
@@ -11,6 +11,7 @@ import { BASE_URL } from '@/network/config'
 import { column1 } from './tableData'
 import { AbnormalTrackingWrapper } from './style'
 
+const { RangePicker } = DatePicker;
 export default memo(function AbnormalTracking() {
   const [state, dispatch] = useReducer(reducer, {
     current: 1,
@@ -24,17 +25,19 @@ export default memo(function AbnormalTracking() {
     isShow: false,
     timer: null,
     editShow: false,
-    editObj: {}
+    editObj: {},
+    startTime: null,
+    endTime: null
   })
   useEffect(() => {    
-    refresh(state.current, state.size, state.name);                                   
+    refresh(state.current, state.size, state.name, state.startTime, state.endTime);                                   
     dealTableHeight();           //计算表格高度
     on(window, 'resize', dealTableHeight);
     return () => {
       off(window, 'resize', dealTableHeight);
     }                                           //eslint-disable-next-line
   },[])     
-  const refresh = (current, size, name) => {
+  const refresh = (current, size, name, startTime, endTime) => {
     dispatch({type: 'add_selection', payload: []})
     !state.loading && dispatch({type: "change_loading", payload: true})
     request({
@@ -43,7 +46,9 @@ export default memo(function AbnormalTracking() {
       params: {
         current: current,
         size: size,
-        name: name
+        name: name,
+        startTime: startTime,
+        endTime: endTime
       }
     }).then(res => {
       const data = res.data ? res.data.records : []
@@ -57,12 +62,12 @@ export default memo(function AbnormalTracking() {
   }
   const pageChange = useCallback((page, pageSize) => {
     dispatch({type: 'change_page', payload: page})
-    !(page === state.current) && refresh(page, state.size, state.name);   //eslint-disable-next-line
+    !(page === state.current) && refresh(page, state.size, state.name, state.startTime, state.endTime);   //eslint-disable-next-line
   },[state])
   const paegSizeChange = useCallback((current, size) => {
     dispatch({type: 'change_page_size', payload: size})
     dispatch({type: 'change_page', payload: current})
-    refresh(state.current, size, state.name);                             //eslint-disable-next-line
+    refresh(state.current, size, state.name, state.startTime, state.endTime);                             //eslint-disable-next-line
   },[state])
   const onSelectChange = (selectedRowKeys) => {
     dispatch({type: 'add_selection', payload: selectedRowKeys})
@@ -101,7 +106,7 @@ export default memo(function AbnormalTracking() {
       }
     }).then(res => {
       if(res.code === 200){
-        refresh(state.current, state.size, state.name); 
+        refresh(state.current, state.size, state.name, state.startTime, state.endTime); 
         message.success('操作成功')
       }
     })
@@ -119,7 +124,7 @@ export default memo(function AbnormalTracking() {
         }
       }).then(res => {
         if(res.code === 200){
-          refresh(state.current, state.size, state.name); 
+          refresh(state.current, state.size, state.name, state.startTime, state.endTime); 
           message.success('操作成功')
         }
       })
@@ -130,14 +135,14 @@ export default memo(function AbnormalTracking() {
   }
   const close = (e) => {
     if(e){      //说明添加成功
-      refresh(state.current, state.size, state.name);
+      refresh(state.current, state.size, state.name, state.startTime, state.endTime);
     }
     dispatch({type: 'change_is_show', payload: false});
   }
   const search = (value) => {           //包含防抖
     const timer = setTimeout(() => {
       dispatch({type: 'change_name', payload: value.target.value});
-      refresh(state.current, state.size, value.target.value);
+      refresh(state.current, state.size, value.target.value, state.startTime, state.endTime);
     },600)
     if(state.timer){
       clearTimeout(state.timer)
@@ -167,9 +172,20 @@ export default memo(function AbnormalTracking() {
   }
   const editClose = (e) => {
     if(e){      //说明编辑成功
-      refresh(state.current, state.size, state.name);
+      refresh(state.current, state.size, state.name, state.startTime, state.endTime);
     }
     dispatch({type: 'change_edit_show', payload: false});
+  }
+  const dateChange = (date) => {
+    let startTime = null;
+    let endTime = null;
+    if(date){
+      startTime = date[0].format("YYYY-MM-DD");
+      endTime = date[1].format("YYYY-MM-DD");
+    }
+    dispatch({type: 'change_start_time', payload: startTime});
+    dispatch({type: 'change_end_time', payload: endTime});
+    refresh(state.current, state.size, state.name, startTime, endTime);
   }
   return (
     <AbnormalTrackingWrapper>
@@ -177,7 +193,7 @@ export default memo(function AbnormalTracking() {
       <EditComponent isShow={state.editShow} close={editClose} editObj={state.editObj}/>
       <Row justify="space-between" align="middle" style={{marginTop: '15px'}}>
         <Col>
-          <Button icon={<ReloadOutlined/>} onClick={e => refresh(state.current, state.size, state.name)}></Button>
+          <Button icon={<ReloadOutlined/>} onClick={e => refresh(state.current, state.size, state.name, state.startTime, state.endTime)}></Button>
         </Col>
         <Col>
           <Button type="primary" onClick={e => add()}>新增</Button>
@@ -186,6 +202,7 @@ export default memo(function AbnormalTracking() {
           <Button type="primary" icon={<VerticalAlignBottomOutlined/>} className="delete" onClick={exportExcel}>导出</Button>
           <Button style={{backgroundColor: 'rgba(252,161,48,.1)'}} className="flag" onClick={e => flag(true)}>标记</Button>
           <Button className="delete_flag" onClick={e => flag(false)}>解除标记</Button>
+          <RangePicker style={{marginLeft: '5px', width: '220px'}} onChange={dateChange}/>
           <Input className="search" placeholder="(姓名)搜索..." suffix={<SearchOutlined />} onChange={search}/>
         </Col>
       </Row>

@@ -15,7 +15,15 @@ export const columns1 = [
     align: 'center',
     textWrap: 'word-break',
     ellipsis: true,
-    width: 300
+    width: 200
+  },
+  {
+    title: '地点类型',
+    dataIndex: 'typeName',
+    key: 'typeName',
+    align: 'center',
+    textWrap: 'word-break',
+    ellipsis: true
   },
   {
     title: '所属经度',
@@ -29,6 +37,14 @@ export const columns1 = [
     title: '所属纬度',
     dataIndex: 'latitude',
     key: 'latitude',
+    align: 'center',
+    textWrap: 'word-break',
+    ellipsis: true
+  },
+  {
+    title: '设备名称',
+    dataIndex: 'facilityName',
+    key: 'facilityName',
     align: 'center',
     textWrap: 'word-break',
     ellipsis: true

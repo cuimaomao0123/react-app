@@ -75,10 +75,10 @@ export default memo(function EditComponent(props) {
     dispatch({type: 'change_site_id', payload: id})
   }
   const onFinish = (value) => {
-    console.log(value);
+    // console.log(value);
   }
   const onFinishFailed = (value) => {
-    console.log(value);
+    // console.log(value);
   }
   const handleOk = () => {
     formRef.current.validateFields().then(async(value) => {

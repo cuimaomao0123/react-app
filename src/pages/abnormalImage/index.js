@@ -70,7 +70,6 @@ export default memo(function AbnormalImage() {
     refresh(current, size, state.siteId);                             //eslint-disable-next-line
   },[state])
   const onSelectChange = (selectedRowKeys) => {
-    console.log('selectedRowKeys changed: ', selectedRowKeys);
     setselection(selectedRowKeys);
   };
   const rowSelection = {

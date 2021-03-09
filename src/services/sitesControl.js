@@ -2,7 +2,7 @@ import request from '@/network/request'
 
 export const getList = (config) => {
   return request({
-    url: '/site/select-all-paged',
+    url: '/site/getAllSite',
     method: 'POST',
     data: config
   });
@@ -27,6 +27,18 @@ export const add = (config) => {
     url: '/site',
     method: 'POST',
     data: config
+  });
+}
+export const getTypeId = () => {
+  return request({
+    url: '/site/typeList',
+    method: 'GET'
+  });
+}
+export const getDeviceId = () => {
+  return request({
+    url: '/facility/list',
+    method: 'GET'
   });
 }
 

@@ -8,7 +8,6 @@ export const getList = (config) => {
   });
 }
 export const deleteSample = (config) => {
-  console.log(config);
   return request({
     url: '/sample/delete-by-ids',
     method: 'post',

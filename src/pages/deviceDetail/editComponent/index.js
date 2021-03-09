@@ -30,17 +30,16 @@ export default memo(function AddComponent(props) {
   }
   const handleValid = (rule, value, callback) => {
     if(value && value.length <=0){
-      console.log(value);
       return Promise.reject("请有效填写该项");
     }else{
       return Promise.resolve();
     }
   }
   const onFinish = (value) => {
-    console.log(value);
+    // console.log(value);
   }
   const onFinishFailed = (value) => {
-    console.log(value);
+    // console.log(value);
   }
   const handleOk = () => {
     formRef.current.validateFields().then(async(value) => {

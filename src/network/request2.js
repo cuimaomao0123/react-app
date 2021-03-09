@@ -4,7 +4,7 @@ import 'nprogress/nprogress.css';
 
 import { getToken } from '@/utils'
 
-const BASE_URL = "http://bolw2eu9.dongtaiyuming.net/";
+const BASE_URL = "http://31r4596a06.zicp.vip/";
 const TIMEOUT = 8000;
 const request = (config) => {
   const instance = axios.create({
