@@ -22,7 +22,7 @@ export const column1 = [
     textWrap: 'word-break',
     ellipsis: true
   },
-  { title: '时间',
+  { title: '捕获时间',
     dataIndex: 'createTime',
     key: 'createTime',
     align: 'center',
@@ -75,6 +75,13 @@ export const column1 = [
     render: data => {
       return `${data} ℃`;
     }
+  },
+  { title: '图片编号',
+  dataIndex: 'id',
+  key: 'id',
+  align: 'center',
+  textWrap: 'word-break',
+  ellipsis: true
   },
   { title: '图像',
     dataIndex: 'pictureUrl',

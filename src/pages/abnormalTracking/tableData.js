@@ -63,6 +63,14 @@ export const column1 = [
     ellipsis: true,
     width: 120
   },
+  { title: '异常图像编号',
+    dataIndex: 'pictureId',
+    key: 'pictureId',
+    align: 'center',
+    textWrap: 'word-break',
+    ellipsis: true,
+    width: 110
+  },
   { title: '近14天到访地',
     dataIndex: 'goSite',
     key: 'goSite',

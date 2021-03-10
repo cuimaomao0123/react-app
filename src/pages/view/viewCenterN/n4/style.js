@@ -29,7 +29,7 @@ export const N4Wrapper = styled.div`
   }
   .select{
     margin-left: 0.125rem;
-    width: 2.2rem;
+    width: 2.3rem;
   }
   .device_detail{
     padding: 10px 0 5px 15px;

@@ -26,6 +26,8 @@ export default function reducer(state, action) {
       return {...state, contact: action.payload}; 
     case "change_go":
       return {...state, go: action.payload}; 
+    case "change_picture_id":
+      return {...state, pictureId: action.payload}; 
     default:
       return state;
   }

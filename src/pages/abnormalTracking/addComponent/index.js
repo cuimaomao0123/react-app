@@ -27,14 +27,15 @@ export default memo(function AddComponent(props) {
     go: "",
     contact: "",  
     siteId: "",
+    pictureId: "",
     selectList: []
   });
   const layout1 = {
     labelCol: {
-      span: 6,
+      span: 10,
     },
     wrapperCol: {
-      span: 18,
+      span: 14,
     }
   };
   const layout2 = {
@@ -101,6 +102,9 @@ export default memo(function AddComponent(props) {
   const goChange = (value) => {
     dispatch({type: 'change_go', payload: value.target.value})
   }
+  const pictureIdChange = (value) => {
+    dispatch({type: 'change_picture_id', payload: value.target.value})
+  }
   const onFinish = (value) => {
     // console.log(value);
   }
@@ -121,7 +125,8 @@ export default memo(function AddComponent(props) {
         state: state.state,
         go: state.go,
         contact: state.contact,  
-        siteId: state.siteId
+        siteId: state.siteId,
+        pictureId: Number(state.pictureId)
       })
       if(res.code === 200){
         message.success('添加成功!')
@@ -211,6 +216,14 @@ export default memo(function AddComponent(props) {
                 label="手机号"
                 name="iphone">
                 <Input onChange={iphoneChange}/>
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item
+                rules={rules.must}
+                label="异常图像编号"
+                name="pictureId">
+                <Input placeholder="从异常图像获取..." onChange={pictureIdChange}/>
               </Form.Item>
             </Col>
           </Row>

@@ -10,6 +10,7 @@ import { tempValue,
           LED,
           getDeviceStatus,
           collect } from '@/services/monitoring'
+import { getSelectList } from '@/services/n4'
 import b1 from '@/assets/img/socket/1.jpg'
 import b2 from '@/assets/img/socket/2.jpg'
 import b3 from '@/assets/img/socket/3.jpg'
@@ -32,12 +33,14 @@ export default memo(function Monitoring() {
     rateValue: 0.50,
     LEDstate: false,
     color: '01',
-    deviceStatus: ''
+    deviceStatus: '',
+    deviceSelect: []
   })
   useEffect(() => {    
     const ws = new WebSocket(socketUrl);
     dispatch({type: 'change_ws', payload: ws});
-    getDeviceNowStatus()
+    getDeviceNowStatus();
+    getDeviceSelect();
     return () => {
       if(state.ws){
         state.ws.close();           //组件销毁，关闭连接
@@ -74,6 +77,14 @@ export default memo(function Monitoring() {
         console.log('服务端主动关闭')
         dispatch({type: 'open_connect', payload: false});
       }
+    }
+  }
+  const getDeviceSelect = async() => {
+    const res = await getSelectList();
+    if(res.code === 200){
+      dispatch({type: 'change_device_select', payload: res.data});
+    }else{
+      message.error(res.msg);
     }
   }
   const templateValueChange = (value) => {
@@ -189,11 +200,20 @@ export default memo(function Monitoring() {
       message.error(res.msg)
     }
   }
+  const deviceChange = (value) => {
+    //因为只有一台设备，所以这里设备切换啥也干不了，等待下一位继承人去完成吧...
+  }
   return (
     <MonitoringWrapper>
       <div className="tip">
         <span className="title">以下为热成像设备实时输出视频流内容，可能会存在延迟...</span>
-        <Button type="primary" onClick={connect} disabled={state.isConnect}>手动重连</Button>
+        <Select placeholder="设备切换..." style={{width: '220px', marginLeft: '10px'}} onChange={deviceChange}>
+          {
+            state.deviceSelect.map(item => {
+              return <Option key ={item.id} value={item.id}>{item.value}</Option>;
+            })
+          }
+        </Select>
       </div>
       {
         state.isConnect ? 

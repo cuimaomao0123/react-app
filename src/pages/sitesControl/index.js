@@ -115,9 +115,7 @@ export default memo(function SitesControl() {
   }
   return (
     <SitesControlWrapper>
-      <AddComponent isShow={state.isAddShow} close={addClose}/>
-      <EditComponent isShow={state.isShow} close={close} editObj={state.editObj}/>
-      <Row justify="space-between" align="middle" style={{marginTop: '15px'}}>
+      <Row justify="space-between" align="middle" style={{marginTop: '10px'}}>
         <Col>
           <Button icon={<ReloadOutlined/>} onClick={e => refresh(state.pageNum, state.size)}></Button>
         </Col>
@@ -135,6 +133,8 @@ export default memo(function SitesControl() {
             loading={state.loading}
             rowKey="id"/>
       <Page {...{total: state.total, limitPage: state.pageNum, limitCount: state.size, onChange: pageChange, onShowSizeChange: paegSizeChange}}></Page>
+      <AddComponent isShow={state.isAddShow} close={addClose}/>
+      <EditComponent isShow={state.isShow} close={close} editObj={state.editObj}/>
     </SitesControlWrapper>
   )
 })

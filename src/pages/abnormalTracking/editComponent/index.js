@@ -194,6 +194,9 @@ export default memo(function EditComponent(props) {
                 <Input/>
               </Form.Item>
             </Col>
+            <Col span={12}>
+              <div style={{marginLeft: '15px'}}>异常图像编号不支持修改</div>
+            </Col>
           </Row>
           <Row>
             <Col span={24}>

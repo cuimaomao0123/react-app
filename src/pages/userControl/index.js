@@ -147,9 +147,7 @@ export default memo(function UserControl() {
   
   return (
     <UserControlWrapper>
-      <AddComponent isShow={state.isShow} close={close}/>
-      <EditComponent isShow={state.editShow} close={editClose} editObj={state.editObj}/>
-      <Row justify="space-between" align="middle" style={{marginTop: '15px'}}>
+      <Row justify="space-between" align="middle" style={{marginTop: '10px'}}>
         <Col>
           <Button icon={<ReloadOutlined/>} onClick={e => refresh(state.pageNum, state.size)}></Button>
         </Col>
@@ -168,6 +166,8 @@ export default memo(function UserControl() {
             loading={state.loading}
             rowKey="id"/>
       <Page {...{total: state.total, limitPage: state.pageNum, limitCount: state.size, onChange: pageChange, onShowSizeChange: paegSizeChange}}></Page>
+      <AddComponent isShow={state.isShow} close={close}/>
+      <EditComponent isShow={state.editShow} close={editClose} editObj={state.editObj}/>
     </UserControlWrapper>
   )
 })

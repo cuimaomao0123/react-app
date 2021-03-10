@@ -162,7 +162,7 @@ export default memo(function SampleInfo() {
 
   return (
     <SampleInfoWrapper>
-      <Row justify="space-between" align="middle">
+      <Row justify="space-between" align="middle" style={{marginTop:'10px'}}>
         <Col>
           <Button onClick={iconRefresh} icon={<ReloadOutlined/>}></Button>
         </Col>

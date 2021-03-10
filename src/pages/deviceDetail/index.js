@@ -30,7 +30,7 @@ export default memo(function DeviceDetail() {
     column.forEach(item => {
       if(item['key'] === 'operate'){
         item['render'] = (data, text) => {
-          return <a style={{fontWeight: 'bold'}} onClick={e => operate(text)}>操作</a>
+          return <a style={{fontWeight: 'bold'}} onClick={e => operate(text)}>编辑</a>
         }
       }
     })
@@ -127,8 +127,7 @@ export default memo(function DeviceDetail() {
   }
   return (
     <DeviceDetailWrapper>
-      <EditComponent isShow={state.isShow} close={close} editObj={state.editObj}/>
-      <Row justify="space-between" align="middle" style={{marginTop: '15px'}}>
+      <Row justify="space-between" align="middle" style={{marginTop: '10px'}}>
         <Col>
           <Button icon={<ReloadOutlined/>} onClick={e => refresh(state.pageNum, state.size)}></Button>
         </Col>
@@ -146,6 +145,7 @@ export default memo(function DeviceDetail() {
             loading={state.loading}
             rowKey="id"/>
       <Page {...{total: state.total, limitPage: state.pageNum, limitCount: state.size, onChange: pageChange, onShowSizeChange: paegSizeChange}}></Page>
+      <EditComponent isShow={state.isShow} close={close} editObj={state.editObj}/>
     </DeviceDetailWrapper>
   )
 })

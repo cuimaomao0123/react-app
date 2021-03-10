@@ -12,6 +12,14 @@ export default function reducer(state, action) {
       return {...state, selectList: action.payload};
     case "change_site_id":
       return {...state, siteId: action.payload};
+    case "change_start_time":
+      return {...state, startTime: action.payload};
+    case "change_end_time":
+      return {...state, endTime: action.payload};
+    case "change_id":
+      return {...state, id: action.payload};
+    case "change_timer":
+      return {...state, timer: action.payload};
     default:
       return state;
   }

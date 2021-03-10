@@ -189,9 +189,7 @@ export default memo(function AbnormalTracking() {
   }
   return (
     <AbnormalTrackingWrapper>
-      <AddComponent isShow={state.isShow} close={close}/>
-      <EditComponent isShow={state.editShow} close={editClose} editObj={state.editObj}/>
-      <Row justify="space-between" align="middle" style={{marginTop: '15px'}}>
+      <Row justify="space-between" align="middle" style={{marginTop: '10px'}}>
         <Col>
           <Button icon={<ReloadOutlined/>} onClick={e => refresh(state.current, state.size, state.name, state.startTime, state.endTime)}></Button>
         </Col>
@@ -218,6 +216,8 @@ export default memo(function AbnormalTracking() {
                rowKey="id"/>
       </Row>
       <Page {...{total: state.total, limitPage: state.current, limitCount: state.size, onChange: pageChange, onShowSizeChange: paegSizeChange}}></Page>
+      <AddComponent isShow={state.isShow} close={close}/>
+      <EditComponent isShow={state.editShow} close={editClose} editObj={state.editObj}/>
     </AbnormalTrackingWrapper>
   )
 })
