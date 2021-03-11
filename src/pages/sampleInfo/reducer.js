@@ -10,6 +10,8 @@ export default function reducer(state, action) {
       return {...state, siteId: action.payload};
     case "change_selected_array":
       return {...state, selectedArray: action.payload};
+    case "change_loading":
+      return {...state, loading: action.payload};
     default:
       return state;
   }

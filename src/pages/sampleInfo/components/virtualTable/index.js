@@ -21,7 +21,8 @@ export default memo(function VirtualTable(props) {
     rowHeight,                      //行高
     bordered,                       //表格的标题是否需要border，不是表体，表体统一通过css默认给过border了
     rowKey,                         //
-    onSelectChange                  //复选框回调事件(要出现复选框，column需要有'selection'项，并且传回调函数过来)
+    onSelectChange,                  //复选框回调事件(要出现复选框，column需要有'selection'项，并且传回调函数过来)
+    loading
   } = props
   const [tableWidth, setTableWidth] = useState(0);
   const widthColumnCount = columns.filter(({ width }) => !width).length;
@@ -139,6 +140,7 @@ export default memo(function VirtualTable(props) {
           body: renderVirtualList,
         }}
         rowKey={rowKey ? rowKey: 'id'}
+        loading={loading ? loading : false}
         />
       </ResizeObserver>
     </VirtualTableWrapper>

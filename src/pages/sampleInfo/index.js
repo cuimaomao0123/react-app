@@ -20,7 +20,8 @@ export default memo(function SampleInfo() {
     size: 1000,
     current: 1,
     siteId: "",
-    selectedArray: []
+    selectedArray: [],
+    loading: false
   });
   useEffect(() => {
     sety(document.body.offsetHeight - 270);
@@ -41,6 +42,7 @@ export default memo(function SampleInfo() {
   },[list, state])    
 
   const refresh = async(current, size, siteId) => {
+    dispatch({type: 'change_loading', payload: true})
     const res = await getList({
       current,
       size,
@@ -48,6 +50,7 @@ export default memo(function SampleInfo() {
     });
     if(res.code === 200){
       const list = dealList(res.data.records);
+      dispatch({type: 'change_loading', payload: false})
       dispatch({type: 'change_is_select_all', payload: false})
       dispatch({type: 'change_indeterminate', payload: false})
       setlist(list);                                  
@@ -177,6 +180,7 @@ export default memo(function SampleInfo() {
                     scroll={{y: y, x:'100vw'}}
                     tableClassName="table"
                     onSelectChange={onSelectChange}
+                    loading={state.loading}
       />
       <p style={{marginTop:'10px', fontSize: '15px'}}>*该表格为虚拟滚动表格，直接展示全部数据，无需分页</p>
     </SampleInfoWrapper>

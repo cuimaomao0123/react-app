@@ -23,7 +23,8 @@ export default memo(function AbnormalImage() {
     endTime: null,
     id: null,
     selectList: [],
-    timer: null
+    timer: null,
+    loading: false
   });
   useEffect(() => {
     refresh(1, 20, '', null, null, null);
@@ -35,6 +36,7 @@ export default memo(function AbnormalImage() {
     }
   },[])
   const refresh = async (pageNum, size, siteId, id, startTime, endTime) => {
+    dispatch({type: 'change_loading', payload: true})
     const res = await getList({
       current: pageNum,
       size: size,
@@ -48,6 +50,7 @@ export default memo(function AbnormalImage() {
       list.forEach((item,index) => {
         item['index'] = index + 1;
       })
+      dispatch({type: 'change_loading', payload: false})
       dispatch({type: 'change_total', payload: res.data.total})
       dispatch({type: 'change_list', payload: list})
     }
@@ -172,6 +175,7 @@ export default memo(function AbnormalImage() {
                dataSource={state.list} 
                bordered={true}
                rowSelection={rowSelection}
+               loading={state.loading}
                pagination={false}
                scroll={{y: y}}
                rowKey="id"/>

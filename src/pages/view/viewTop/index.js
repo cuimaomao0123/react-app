@@ -61,7 +61,7 @@ export default memo(function ViewTop(props) {
             <span className="rate_item1">{props.chartData.ycBj}</span>
             <span className="rate_item2">人</span>
             <div className="rate_item3">
-              <p>较过去异常上升数<span>{props.chartData.ycBj}</span>人</p>
+              <p>较昨日异常上升数<span>{props.chartData.ycBj}</span>人</p>
             </div>
           </div>
           </Col>

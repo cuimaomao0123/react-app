@@ -20,6 +20,8 @@ export default function reducer(state, action) {
       return {...state, id: action.payload};
     case "change_timer":
       return {...state, timer: action.payload};
+    case "change_loading":
+      return {...state, loading: action.payload};
     default:
       return state;
   }
