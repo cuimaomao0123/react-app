@@ -56,11 +56,6 @@ export const routes = [           //需要权限的路由(登录进入主页面�
         component: View
       },
       {
-        path: "/home/sampleInfo", 
-        title: '样本信息',
-        component: SampleInfo
-      },
-      {
         render: () => (
           <Redirect to="/404" from="*"/>
         )
@@ -77,8 +72,13 @@ export const routes = [           //需要权限的路由(登录进入主页面�
         path: "/infoCollect",
         exact: true,
         render: () => (
-          <Redirect to="/infoCollect/abnormalImage"/>
+          <Redirect to="/infoCollect/sampleInfo"/>
         )
+      },
+      {
+        path: "/infoCollect/sampleInfo", 
+        title: '样本信息',
+        component: SampleInfo
       },
       {
         path: "/infoCollect/abnormalImage",

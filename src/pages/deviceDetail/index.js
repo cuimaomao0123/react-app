@@ -133,7 +133,7 @@ export default memo(function DeviceDetail() {
         </Col>
         <Col>
           <Button style={{marginLeft: '5px'}} type="primary" danger onClick={deleteWithId}>删除</Button>
-          <Input style={{width: '170px', marginLeft: '5px'}} placeholder="(设备名)搜索..." onChange={searchInput} suffix={<SearchOutlined />}/>
+          <Input style={{width: '190px', marginLeft: '5px'}} placeholder="(设备名)搜索..." onChange={searchInput} suffix={<SearchOutlined />}/>
         </Col>
       </Row>
       <Table className="table"

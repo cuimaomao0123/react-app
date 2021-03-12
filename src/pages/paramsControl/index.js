@@ -150,7 +150,7 @@ export default memo(function ParamsControl() {
         <Col>
           <Button type="primary" onClick={add}>新增</Button>
           <Button type="primary" danger style={{marginLeft: '5px'}} onClick={deleteWithId}>删除</Button>
-          <Select placeholder="按参数(site)查询..." style={{ marginLeft: '5px' }} onChange={handleChange}>
+          <Select placeholder="按参数(code)查询..." style={{ marginLeft: '5px' }} onChange={handleChange}>
             <Option key="all" value="all">全部</Option>
             <Option key="site" value="site">Site</Option>
             <Option key="pallet" value="pallet">Pallet</Option>

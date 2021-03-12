@@ -49,7 +49,7 @@ export default memo(function SitesControl() {
     })
     if(res.code === 200){
       dispatch({type: 'change_total', payload: res.data.total})
-      const list = res.data;
+      const list = res.data.records;
       list.forEach((item, index) => {
         item['index'] = index + 1;
       })
