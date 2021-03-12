@@ -29,12 +29,13 @@ export default memo(function Monitoring() {
     isConnect: false,
     spin: false,
     ws: null,
-    templateValue: 36.5,
+    templateValue: 40.0,
     rateValue: 0.50,
     LEDstate: false,
     color: '01',
     deviceStatus: '',
-    deviceSelect: []
+    deviceSelect: [],
+    warning: false
   })
   useEffect(() => {    
     const ws = new WebSocket(socketUrl);
@@ -50,7 +51,14 @@ export default memo(function Monitoring() {
   },[])
   useEffect(() => {
     connect();                    //eslint-disable-next-line
-  },[state.ws])                   
+  },[state.ws])   
+  useEffect(() => {
+    if(state.max.length>0 && state.max >state.templateValue){
+      dispatch({type: 'change_warning', payload: true});
+    }else{
+      dispatch({type: 'change_warning', payload: false});
+    }
+  },[state.max])                
   const connect = () => {
     const ws = state.ws;
     if(ws !== null){
@@ -225,7 +233,7 @@ export default memo(function Monitoring() {
         <div className="videoBox">
           <img src={state.url} alt="资源请求中,请等待..."/>
         </div>
-        <ParamsWrapper>
+        <ParamsWrapper warning={state.warning}>
           <div className="data">
             <div className="data-row">
               <div>温度单位</div>

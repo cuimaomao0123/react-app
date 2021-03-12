@@ -28,6 +28,8 @@ export default function reducer(state, action) {
       return {...state, deviceStatus: action.payload};
     case "change_device_select":
       return {...state, deviceSelect: action.payload};
+    case "change_warning":
+      return {...state, warning: action.payload};
     default:
       return state;
   }
