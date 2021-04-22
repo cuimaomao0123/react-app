@@ -4,6 +4,7 @@ import { MehOutlined } from '@ant-design/icons';
 import { getSelectList, getFacility } from '@/services/n4'
 import { N4Wrapper } from './style'
 import reducer from './reducer'
+import deviceImg from '@/assets/img/deviceImg.jpg'
 const { Option } = Select;
 
 export default memo(function N4() {
@@ -29,7 +30,6 @@ export default memo(function N4() {
       dispatch({type: 'change_facility', payload: res.data});
     }
   }
-  const img = "https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1585758487,2031490270&fm=26&gp=0.jpg";
   const handleChange = (value) => {
     getFacilityData(value);
   }
@@ -62,7 +62,7 @@ export default memo(function N4() {
         </div>
         <div className="device_img">
         <Image className="zmage" 
-               src={img} 
+               src={deviceImg} 
                alt="加载中..."
         />
         </div>

@@ -29,7 +29,7 @@ export default memo(function M2(props) {
       },
       yAxis: {
         type: 'category',
-        data: ['其他', '码头', '地铁站', '客运车站', '高铁站', '机场'],
+        data: ['其他', '学校', '地铁站', '客运车站', '高铁站', '机场'],
         axisTick: {
           show: false
         },

@@ -17,7 +17,7 @@ export const columns1 = [
     align: 'center'
   },
   {
-    title: '热成像与模块ip地址',
+    title: '热成像仪Ip地址',
     dataIndex: 'moduleIp',
     key: 'moduleIp',
     textWrap: 'word-break',
@@ -33,7 +33,7 @@ export const columns1 = [
     align: 'center'
   },
   {
-    title: '服务器ip地址',
+    title: '服务端Ip地址',
     dataIndex: 'serverIp',
     key: 'serverIp',
     textWrap: 'word-break',
@@ -41,7 +41,7 @@ export const columns1 = [
     align: 'center'
   },
   {
-    title: '服务器ip端口号',
+    title: '服务端端口号',
     dataIndex: 'serverPort',
     key: 'serverPort',
     textWrap: 'word-break',

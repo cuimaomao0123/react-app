@@ -35,7 +35,7 @@ export const N4Wrapper = styled.div`
     padding: 10px 0 5px 15px;
     display: flex;
     .device_desc{
-      width: 50%;
+      width: 55%;
       p{
         margin-top: 5px;
       }
@@ -44,7 +44,6 @@ export const N4Wrapper = styled.div`
       flex: 1;
       .zmage{
         position: absolute;
-        top: 40%;
         left: 70%;
         width: 1.875rem;
         height: 1.625rem;
