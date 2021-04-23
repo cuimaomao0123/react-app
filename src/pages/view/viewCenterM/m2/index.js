@@ -76,7 +76,7 @@ export default memo(function M2(props) {
         <i className="iconfont icon-gaotiedongche"></i>
         <i className="iconfont icon-keyunzhan"></i>
         <i className="iconfont icon-ditie"></i>
-        <i className="iconfont icon-gudingshunanmatou"></i>
+        <i className="iconfont icon-xuexiao"></i>
         <i className="iconfont icon-zhandian"></i>
       </div>
       <div ref={M2Ref} className="right"></div>

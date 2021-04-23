@@ -59,7 +59,7 @@ export const ViewTopWrapper = styled.div`
 .time_total{
   position: relative;
   padding: 0 20px;
-  .icon-shijian{
+  .icon-temperature{
     position: absolute;
     top: 5px;
     font-size: 40px;

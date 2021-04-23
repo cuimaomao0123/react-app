@@ -37,7 +37,7 @@ export default memo(function ViewTop(props) {
           </Col>
           <Col span={5}>
           <div className="top_item time_total">
-            <i className="iconfont icon-shijian"></i>
+            <i className="iconfont icon-temperature"></i>
             <span className="time_total_item1">{props.chartData.ycAverage === null? 0 : props.chartData.ycAverage}</span>
             <span className="time_total_item2">℃</span>
             <div className="time_total_item3">

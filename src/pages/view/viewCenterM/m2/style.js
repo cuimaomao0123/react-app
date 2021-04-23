@@ -33,7 +33,7 @@ export const M2Wrapper = styled.div`
     .icon-ditie{
       color: #56D0E3;
     }
-    .icon-gudingshunanmatou{
+    .icon-xuexiao{
       color: #F57474;
     }
     .icon-zhandian{
