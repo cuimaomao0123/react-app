@@ -65,13 +65,13 @@ export default memo(function M3(props) {
         {
           name: '男',
           type: 'line',
-          stack: '总量',
+          // stack: '总量',
           data: [chartData.nan1, chartData.nan2, chartData.nan3, chartData.nan4, chartData.nan5, chartData.nan6, chartData.nan7, chartData.nan8]
         },
         {
           name: '女',
           type: 'line',
-          stack: '总量',
+          // stack: '总量',
           data: [chartData.nv1, chartData.nv2, chartData.nv3, chartData.nv4, chartData.nv5, chartData.nv6, chartData.nv7, chartData.nv8]
         }
       ]
